@@ -49,7 +49,7 @@ namespace Lampadas.Controllers
         public void Post(byte lampada, bool status)
         {
             var hubContext = GlobalHost.ConnectionManager.GetHubContext<MainHub>();
-            hubContext.Clients.All.hello(nome);
+            hubContext.Clients.All.hello("");
         }
     }
 }
