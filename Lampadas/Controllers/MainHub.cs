@@ -9,10 +9,8 @@ using Microsoft.AspNet.SignalR.Hubs;
 
 namespace Lampadas.Controllers
 {
-    [AllowAnonymous]
     public class MainHub : Hub
     {
-        [AllowAnonymous]
         public void Hello(string nomeDoCara)
         {
             Clients.All.hello(nomeDoCara);

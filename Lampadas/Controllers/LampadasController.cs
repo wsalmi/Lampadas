@@ -15,8 +15,13 @@ using Microsoft.AspNet.SignalR;
 
 namespace Lampadas.Controllers
 {
-    public class MeController : ApiController
+    public class LampadasController : ApiController
     {
+        public LampadasController()
+        {
+
+        }
+
         // GET api/Me
         public GetViewModel Get(string nome = "Marcola")
         {
