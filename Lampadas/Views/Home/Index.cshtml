@@ -10,8 +10,17 @@
             $('#DataHora').html(nomeDoCara);
         }
 
+        hubTest.client.acender = function (lampada) {
+            $('#lampada-' + lampada).addClass('lampada-on');
+        }
+
+        hubTest.client.apagar = function (lampada) {
+            $('#lampada-' + lampada).removeClass('lampada-on');
+        }
+
         $.connection.hub.start().done(function () {
             hubTest.server.hello('Marcola');
         });
+
     </script>
 }

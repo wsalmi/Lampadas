@@ -32,7 +32,9 @@ namespace Lampadas.Controllers
             Lampadas.TryAdd(7, false);
             Lampadas.TryAdd(8, false);
             Lampadas.TryAdd(9, false);
-            Lampadas.TryAdd(10, false);            
+            Lampadas.TryAdd(10, false);
+
+            Tokens.Add(DateTime.Today.ToString("d"));
         }
 
         // GET api/Me
@@ -46,10 +48,26 @@ namespace Lampadas.Controllers
             //var user = UserManager.FindById(User.Identity.GetUserId());
         }
 
-        public void Post(byte lampada, bool status)
+        [HttpGet]
+        public void Post(byte lampada, bool status, string token)
         {
             var hubContext = GlobalHost.ConnectionManager.GetHubContext<MainHub>();
-            hubContext.Clients.All.hello("");
+
+            if (Tokens.Contains(token))
+            {
+                if (Lampadas.ContainsKey(lampada))
+                {
+                    Lampadas[lampada] = status;
+
+                    if (status)
+                        hubContext.Clients.All.acender(lampada);
+                    else
+                        hubContext.Clients.All.apagar(lampada);
+                  
+                }
+            }
+
+          
         }
     }
 }
