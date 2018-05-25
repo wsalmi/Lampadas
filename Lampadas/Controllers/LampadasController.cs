@@ -36,20 +36,20 @@ namespace Lampadas.Controllers
         }
 
         // GET api/Me
-        public void Get(string nome = "Marcola")
+        public async Task<IEnumerable<object>> Get(string nome = "Marcola")
         {
-            var hubContext = GlobalHost.ConnectionManager.GetHubContext<MainHub>();
-            hubContext.Clients.All.hello(nome);
-
+            return await Task.Run<IEnumerable<object>>(() =>
+            {
+                return Lampadas.Select(l => new { l });
+            });           
 
             //var user = UserManager.FindById(User.Identity.GetUserId());
         }
 
         public void Post(byte lampada, bool status)
         {
-
-
-            
+            var hubContext = GlobalHost.ConnectionManager.GetHubContext<MainHub>();
+            hubContext.Clients.All.hello(nome);
         }
     }
 }
