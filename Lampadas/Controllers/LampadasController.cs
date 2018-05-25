@@ -36,14 +36,12 @@ namespace Lampadas.Controllers
         }
 
         // GET api/Me
-        public async Task<IEnumerable<object>> Get(string nome = "Marcola")
+        public async Task<IEnumerable<object>> Get()
         {
             return await Task.Run<IEnumerable<object>>(() =>
             {
-                return Lampadas.Select(l => new { l });
-            });           
-
-            //var user = UserManager.FindById(User.Identity.GetUserId());
+                return Lampadas.OrderBy(e => e.Key).Select(l => new { Lampada = l.Key, Status = l.Value });
+            });            
         }
 
         public void Post(byte lampada, bool status)
