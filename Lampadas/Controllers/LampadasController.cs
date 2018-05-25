@@ -23,6 +23,7 @@ namespace Lampadas.Controllers
 
         public LampadasController()
         {
+            Tokens = new ConcurrentBag<string>();
             Lampadas = new ConcurrentDictionary<byte, bool>();
             Lampadas.TryAdd(1, false);
             Lampadas.TryAdd(2, false);
@@ -35,7 +36,7 @@ namespace Lampadas.Controllers
             Lampadas.TryAdd(9, false);
             Lampadas.TryAdd(10, false);
 
-            Tokens.Add(DateTime.Today.ToString("d"));
+            Tokens.Add("lobisomem");
         }
 
         // GET api/Me
@@ -47,26 +48,23 @@ namespace Lampadas.Controllers
             });            
         }
 
-        [HttpGet]
+        [HttpPost]
         public void Post(byte lampada, bool status, string token)
         {
             var hubContext = GlobalHost.ConnectionManager.GetHubContext<MainHub>();
-
+            var start = DateTime.Now;
             if (Tokens.Contains(token))
             {
                 if (Lampadas.ContainsKey(lampada))
                 {
                     Lampadas[lampada] = status;
-
+                    var seconds = (DateTime.Now - start).Milliseconds;
                     if (status)
-                        hubContext.Clients.All.acender(lampada);
+                        hubContext.Clients.All.acender(lampada,seconds);
                     else
-                        hubContext.Clients.All.apagar(lampada);
-                  
+                        hubContext.Clients.All.apagar(lampada,seconds);
                 }
             }
-
-          
         }
     }
 }
