@@ -23,6 +23,7 @@ namespace Lampadas.Controllers
 
         public LampadasController()
         {
+            Lampadas = new ConcurrentDictionary<byte, bool>();
             Lampadas.TryAdd(1, false);
             Lampadas.TryAdd(2, false);
             Lampadas.TryAdd(3, false);
@@ -38,14 +39,12 @@ namespace Lampadas.Controllers
         }
 
         // GET api/Me
-        public async Task<IEnumerable<object>> Get(string nome = "Marcola")
+        public async Task<IEnumerable<object>> Get()
         {
             return await Task.Run<IEnumerable<object>>(() =>
             {
-                return Lampadas.Select(l => new { l });
-            });           
-
-            //var user = UserManager.FindById(User.Identity.GetUserId());
+                return Lampadas.ToList().OrderBy(e => e.Key).Select(l => new { Lampada = l.Key, Status = l.Value });
+            });            
         }
 
         [HttpGet]
