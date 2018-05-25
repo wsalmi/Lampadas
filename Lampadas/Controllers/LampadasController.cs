@@ -64,9 +64,23 @@ namespace Lampadas.Controllers
                         hubContext.Clients.All.apagar(lampada);
                   
                 }
-            }
+            }          
+        }
 
-          
+        [HttpPost]
+        public void CriarToken(string Token)
+        {
+            if (!string.IsNullOrEmpty(Token))
+            {
+                if(Tokens.Any(e => e == Token))
+                    throw new HttpException(400, "O Token já existe na lista !");
+
+                Tokens.Add(Token);
+            }
+            else
+            {
+                throw new HttpException(400,"O Token não pode ser vazio ou nulo !");
+            }
         }
     }
 }
