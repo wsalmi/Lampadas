@@ -68,7 +68,7 @@ namespace Lampadas.Controllers
         }
 
         [HttpPost]
-        public void CriarToken(string Token)
+        public void CriarToken([FromBody]string Token)
         {
             if (!string.IsNullOrEmpty(Token))
             {
