@@ -12,25 +12,44 @@ using Microsoft.Owin.Security;
 using Owin;
 using Lampadas.Models;
 using Microsoft.AspNet.SignalR;
+using System.Collections.Concurrent;
 
 namespace Lampadas.Controllers
 {
     public class LampadasController : ApiController
     {
+        public ConcurrentDictionary<byte, bool> Lampadas { get; set; }
+        public ConcurrentBag<string> Tokens { get; set; }
+
         public LampadasController()
         {
-
+            Lampadas.TryAdd(1, false);
+            Lampadas.TryAdd(2, false);
+            Lampadas.TryAdd(3, false);
+            Lampadas.TryAdd(4, false);
+            Lampadas.TryAdd(5, false);
+            Lampadas.TryAdd(6, false);
+            Lampadas.TryAdd(7, false);
+            Lampadas.TryAdd(8, false);
+            Lampadas.TryAdd(9, false);
+            Lampadas.TryAdd(10, false);            
         }
 
         // GET api/Me
-        public GetViewModel Get(string nome = "Marcola")
+        public void Get(string nome = "Marcola")
         {
             var hubContext = GlobalHost.ConnectionManager.GetHubContext<MainHub>();
             hubContext.Clients.All.hello(nome);
 
 
             //var user = UserManager.FindById(User.Identity.GetUserId());
-            return new GetViewModel() { Hometown = "Casa da Mãe Joana" };
+        }
+
+        public void Post(byte lampada, bool status)
+        {
+
+
+            
         }
     }
 }
