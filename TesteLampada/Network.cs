@@ -165,7 +165,7 @@ namespace STF.SI.Common
             /// <param name="parametrosCabecalho">Parametros que serão adicionados no cabeçalho</param>
             /// <returns></returns>
             public static string DELETE_Json(string url, object conteudo, IDictionary<string, string> parametrosCabecalho = null)
-                => SEND_Content(METHOD_DELETE, url, CONTENT_TYPE_JSON, Newtonsoft.Json.Serialization.ObjectToJson(conteudo), parametrosCabecalho: parametrosCabecalho);
+                => SEND_Content(METHOD_DELETE, url, CONTENT_TYPE_JSON, Serialization.ObjectToJson(conteudo), parametrosCabecalho: parametrosCabecalho);
             #endregion DELETE
 
             private static string SEND_Values(string method, string url, IDictionary<string, string> parametros = null, IDictionary<string, string> parametrosCabecalho = null, IDictionary<string, string> parametrosQueryString = null, NetworkCredential credential = null)

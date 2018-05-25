@@ -1,4 +1,5 @@
-﻿using STF.SI.Common;
+﻿using Newtonsoft.Json;
+using STF.SI.Common;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,41 +15,45 @@ namespace TesteLampada.Rest
    
     public static class HttpClientSample
     {
-        const string Url = "http://localhost:64195/api/lampadas";
+        const string Url = "http://10.14.11.28/hack/api/lampadas";
+        const string UrlPost = "http://10.14.11.28/hack/api/lampadas/Post/?token=" + token;
+        const string token = "lobisomem";
+
         public class Lampada
         {
             public byte lampada { get; set; }
             public bool status { get; set; }
         }
 
-        public static async Task<Lampada> GetProductAsync(Lampada lamp)
+        public static List<Lampada> GetProduct(Lampada lamp)
         {
+            List<Lampada> obj = new List<Lampada>();
             try
             {
-                IDictionary<string, string> parametros = null;
+                var parametros = new Dictionary<string, string>();
                 parametros.Add("lampada", lamp.lampada.ToString());
                 parametros.Add("status", lamp.status.ToString());
-
-                Network.HTTP.GET(Url, parametros);
-
+                var resultado = Network.HTTP.GET(Url, parametros);
+                obj = JsonConvert.DeserializeObject<List<Lampada>>(resultado);
             }
             catch (Exception e)
             {
                 Console.WriteLine("Exception ", e.InnerException);
             }
-            
-            return null;
+
+            return obj;
         }
 
-        public static async void PostAsync(Lampada lamp)
+        public static void PostAsync(Lampada lamp)
         {
             try
             {
-                IDictionary<string, string> parametros = null;
+                var parametros = new Dictionary<string, string>();
                 parametros.Add("lampada", lamp.lampada.ToString());
                 parametros.Add("status", lamp.status.ToString());
 
-                Network.HTTP.POST(Url, parametros);
+                Network.HTTP.POST_Json(UrlPost, parametros);
+
             }
             catch (Exception e) {
                 Console.WriteLine("Exception ", e.InnerException);
