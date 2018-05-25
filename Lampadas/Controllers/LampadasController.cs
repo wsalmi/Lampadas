@@ -23,6 +23,7 @@ namespace Lampadas.Controllers
 
         public LampadasController()
         {
+            Lampadas = new ConcurrentDictionary<byte, bool>();
             Lampadas.TryAdd(1, false);
             Lampadas.TryAdd(2, false);
             Lampadas.TryAdd(3, false);
@@ -40,7 +41,7 @@ namespace Lampadas.Controllers
         {
             return await Task.Run<IEnumerable<object>>(() =>
             {
-                return Lampadas.OrderBy(e => e.Key).Select(l => new { Lampada = l.Key, Status = l.Value });
+                return Lampadas.ToList().OrderBy(e => e.Key).Select(l => new { Lampada = l.Key, Status = l.Value });
             });            
         }
 
