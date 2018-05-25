@@ -16,14 +16,5 @@ namespace Lampadas.Controllers
             Clients.All.hello(nomeDoCara);
         }
 
-        public void Acender(int lampada)
-        {
-            Clients.All.acender(lampada);
-        }
-
-        public void Apagar(int lampada)
-        {
-            Clients.All.apagar(lampada);
-        }
     }
 }
