@@ -5,21 +5,26 @@
 
     <script>
         var hubTest = $.connection.mainHub;
+        var card = $('#TemplateCard').find('li').clone();
 
         hubTest.client.hello = function (nomeDoCara) {
             $('#DataHora').html(nomeDoCara);
         }
 
-        hubTest.client.acender = function (lampada) {
+        hubTest.client.acender = function (lampada, seconds) {
+            console.log(seconds);
             $('#lampada-' + lampada).addClass('lampada-on');
+            $('#TemplateCard').append(card);
         }
 
-        hubTest.client.apagar = function (lampada) {
+        hubTest.client.apagar = function (lampada, seconds) {
+            console.log(seconds);
             $('#lampada-' + lampada).removeClass('lampada-on');
+            $('#TemplateCard').append(card);
+            $('.segundos').html(seconds + 'ms');
         }
 
         $.connection.hub.start().done(function () {
-            hubTest.server.hello('Marcola');
         });
 
     </script>
