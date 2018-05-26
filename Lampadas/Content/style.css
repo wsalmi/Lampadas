@@ -10,11 +10,12 @@
     to {opacity: 1;}
 }
 
-html, body{
-	padding: 0px;
-	margin: 0px;
-	box-sizing: border-box;
-	height: auto;
+html, body {
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+    height: auto;
+    background-color: #004e9e;
 }
 
 .col{

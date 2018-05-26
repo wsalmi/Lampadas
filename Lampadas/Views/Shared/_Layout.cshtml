@@ -38,26 +38,26 @@
 
 	 
     <script>
-        new Glide('.glide', {
-            type: 'slider',
-            startAt: 1,
-            perView: 10,
-            focusAt: 'center'
-        }).mount();
+        //var glide = new Glide('.glide', {
+        //    type: 'slider',
+        //    startAt: 1,
+        //    perView: 10,
+        //    focusAt: 'center'
+        //}).mount();
 
-        function energia() {
-            console.log("entrou")
-            $(".lampadas").each(function (i, e) {
-                var self = $(e);
+        //function energia() {
+        //    console.log("entrou")
+        //    $(".lampadas").each(function (i, e) {
+        //        var self = $(e);
 
-                if (self.hasClass("lampada-on")) {
-                    self.removeClass("lampada-on", 1500);
-                } else {
-                    self.addClass("lampada-on");
-                }
+        //        if (self.hasClass("lampada-on")) {
+        //            self.removeClass("lampada-on", 1500);
+        //        } else {
+        //            self.addClass("lampada-on");
+        //        }
 
-            });
-        }
+        //    });
+        //}
     </script>
 </body>
 </html>
