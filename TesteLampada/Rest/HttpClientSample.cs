@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using STF.SI.Common;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -12,71 +15,51 @@ namespace TesteLampada.Rest
    
     public static class HttpClientSample
     {
+        const string Url = "http://10.14.11.28/hack/api/lampadas";
+        const string UrlPost = "http://10.14.11.28/hack/api/lampadas/Post/?token=" + token;
+        const string token = "lobisomem";
+
         public class Lampada
         {
             public byte lampada { get; set; }
             public bool status { get; set; }
         }
 
-        static WebClient client = new WebClient();
-
-        static async Task<Lampada> GetProductAsync(string path)
+        public static List<Lampada> GetProduct(Lampada lamp)
         {
-            Lampada lamp = null;
-
-            HttpResponseMessage response = await client.GetAsync(path);
-            if (response.IsSuccessStatusCode)
-            {
-                lamp = await response.Content.ReadAsAsync<Lampada>();
-            }
-            return lamp;
-        }
-        static void Main()
-        {
-            RunAsync().GetAwaiter().GetResult();
-        }
-
-        static async Task<Uri> PostAsync(Lampada lamp)
-        {
-            string data = string.Format("?lampada={0}&status={1}", lamp.lampada, lamp.status);
-            StringContent obj = new StringContent(data);
-            HttpResponseMessage response = client.("api/lampadas", new { });
-            response.EnsureSuccessStatusCode();
-
-            // return URI of the created resource.
-            return response.Headers.Location;
-        }
-
-        static async Task RunAsync()
-        {
-            // Update port # in the following line.
-            client.BaseAddress = new Uri("http://localhost:64195/");
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(
-                new MediaTypeWithQualityHeaderValue("application/json"));
-
+            List<Lampada> obj = new List<Lampada>();
             try
             {
-                Lampada lamp = new Lampada
-                {
-                    lampada = 1,
-                    status = true
-                };
-
-                var url = await PostAsync(lamp);
-                Console.WriteLine($"Created at {url}");
-
-                lamp = await GetProductAsync(url.PathAndQuery);
-                Console.WriteLine(lamp);
+                var parametros = new Dictionary<string, string>();
+                parametros.Add("lampada", lamp.lampada.ToString());
+                parametros.Add("status", lamp.status.ToString());
+                var resultado = Network.HTTP.GET(Url, parametros);
+                obj = JsonConvert.DeserializeObject<List<Lampada>>(resultado);
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                Console.WriteLine("Exception ", e.InnerException);
             }
 
-            Console.ReadLine();
+            return obj;
         }
+
+        public static void PostAsync(Lampada lamp)
+        {
+            try
+            {
+                var parametros = new Dictionary<string, string>();
+                parametros.Add("lampada", lamp.lampada.ToString());
+                parametros.Add("status", lamp.status.ToString());
+
+                Network.HTTP.POST_Json(UrlPost, parametros);
+
+            }
+            catch (Exception e) {
+                Console.WriteLine("Exception ", e.InnerException);
+            }
+        }
+
     }
 
-    
 }

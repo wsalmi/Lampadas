@@ -45,26 +45,48 @@ namespace Lampadas.Controllers
             return await Task.Run<IEnumerable<object>>(() =>
             {
                 return Lampadas.ToList().OrderBy(e => e.Key).Select(l => new { Lampada = l.Key, Status = l.Value });
-            });            
+            });
         }
 
         [HttpPost]
-        public void Post(byte lampada, bool status, string token)
+        public void Post([FromBody]PostData data, string token)
         {
             var hubContext = GlobalHost.ConnectionManager.GetHubContext<MainHub>();
             var start = DateTime.Now;
             if (Tokens.Contains(token))
             {
-                if (Lampadas.ContainsKey(lampada))
+                if (Lampadas.ContainsKey(data.lampada))
                 {
-                    Lampadas[lampada] = status;
+                    Lampadas[data.lampada] = data.status;
                     var seconds = (DateTime.Now - start).Milliseconds;
-                    if (status)
-                        hubContext.Clients.All.acender(lampada,seconds);
+                    if (data.status)
+                        hubContext.Clients.All.acender(data.lampada, seconds);
                     else
-                        hubContext.Clients.All.apagar(lampada,seconds);
+                        hubContext.Clients.All.apagar(data.lampada, seconds);
                 }
+            }          
+        }
+
+        [HttpPost]
+        public void CriarToken([FromBody]string Token)
+        {
+            if (!string.IsNullOrEmpty(Token))
+            {
+                if(Tokens.Any(e => e == Token))
+                    throw new HttpException(400, "O Token já existe na lista !");
+
+                Tokens.Add(Token);
             }
+            else
+            {
+                throw new HttpException(400,"O Token não pode ser vazio ou nulo !");
+            }
+        }
+
+        public struct PostData
+        {
+            public byte lampada;
+            public bool status;
         }
     }
 }
