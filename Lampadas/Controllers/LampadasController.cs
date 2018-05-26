@@ -18,25 +18,29 @@ namespace Lampadas.Controllers
 {
     public class LampadasController : ApiController
     {
-        public ConcurrentDictionary<byte, bool> Lampadas { get; set; }
-        public ConcurrentBag<string> Tokens { get; set; }
+        const string TestToken = "TesteMeu";
+
+        public static DateTime Last { get; set; }
+
+        public static ConcurrentDictionary<byte, bool> Lampadas { get; set; }
+        public static ConcurrentBag<string> Tokens { get; set; } = new ConcurrentBag<string>();
 
         public LampadasController()
         {
-            Tokens = new ConcurrentBag<string>();
-            Lampadas = new ConcurrentDictionary<byte, bool>();
-            Lampadas.TryAdd(1, false);
-            Lampadas.TryAdd(2, false);
-            Lampadas.TryAdd(3, false);
-            Lampadas.TryAdd(4, false);
-            Lampadas.TryAdd(5, false);
-            Lampadas.TryAdd(6, false);
-            Lampadas.TryAdd(7, false);
-            Lampadas.TryAdd(8, false);
-            Lampadas.TryAdd(9, false);
-            Lampadas.TryAdd(10, false);
-
-            Tokens.Add("lobisomem");
+            if (Lampadas == null)
+            {
+                Lampadas = new ConcurrentDictionary<byte, bool>();
+                Lampadas.TryAdd(1, false);
+                Lampadas.TryAdd(2, false);
+                Lampadas.TryAdd(3, false);
+                Lampadas.TryAdd(4, false);
+                Lampadas.TryAdd(5, false);
+                Lampadas.TryAdd(6, false);
+                Lampadas.TryAdd(7, false);
+                Lampadas.TryAdd(8, false);
+                Lampadas.TryAdd(9, false);
+                Lampadas.TryAdd(10, false);
+            }
         }
 
         // GET api/Me
@@ -52,19 +56,35 @@ namespace Lampadas.Controllers
         public void Post([FromBody]PostData data, string token)
         {
             var hubContext = GlobalHost.ConnectionManager.GetHubContext<MainHub>();
-            var start = DateTime.Now;
-            if (Tokens.Contains(token))
+
+            if (Lampadas.ContainsKey(data.lampada))
             {
-                if (Lampadas.ContainsKey(data.lampada))
+                if (Tokens.IsEmpty || token == TestToken || Tokens.Contains(token))
+                //if (Tokens.Contains(token))
                 {
+                    var agora = DateTime.Now;
                     Lampadas[data.lampada] = data.status;
-                    var seconds = (DateTime.Now - start).Milliseconds;
+                    var seconds = (agora - Last).TotalMilliseconds;
                     if (data.status)
                         hubContext.Clients.All.acender(data.lampada, seconds);
                     else
                         hubContext.Clients.All.apagar(data.lampada, seconds);
+
+                    Last = agora;
                 }
-            }          
+                else
+                {
+                    if (data.status)
+                        hubContext.Clients.All.testeAcender(data.lampada);
+                    else
+                        hubContext.Clients.All.testeApagar(data.lampada);
+                }
+            }
+            else
+            {
+                throw new Exception("Tsc tsc tsc... Essa lampada não existe!");
+            }
+
         }
 
         [HttpPost]
@@ -72,14 +92,14 @@ namespace Lampadas.Controllers
         {
             if (!string.IsNullOrEmpty(Token))
             {
-                if(Tokens.Any(e => e == Token))
+                if (Tokens.Any(e => e == Token))
                     throw new HttpException(400, "O Token já existe na lista !");
 
                 Tokens.Add(Token);
             }
             else
             {
-                throw new HttpException(400,"O Token não pode ser vazio ou nulo !");
+                throw new HttpException(400, "O Token não pode ser vazio ou nulo !");
             }
         }
 

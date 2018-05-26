@@ -30,6 +30,11 @@
             //glide.mount();
         }
 
+        $.connection.hub.stateChanged(function (s, e, c) {
+            if (s.newState != 0)
+                $.connection.hub.start();
+        });
+
         $.connection.hub.start();
 
     </script>

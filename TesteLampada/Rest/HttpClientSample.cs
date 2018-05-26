@@ -16,8 +16,8 @@ namespace TesteLampada.Rest
     public static class HttpClientSample
     {
         const string Url = "http://10.14.11.28/hack/api/lampadas";
-        const string UrlPost = "http://10.14.11.28/hack/api/lampadas/Post/?token=" + token;
-        const string token = "lobisomem";
+        const string UrlPost = "http://10.14.11.28/hack/api/lampadas?token=" + token;
+        const string token = "TesteMeu";
 
         public class Lampada
         {

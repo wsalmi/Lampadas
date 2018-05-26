@@ -11,10 +11,14 @@ namespace Lampadas.Controllers
 {
     public class MainHub : Hub
     {
-        public void Hello(string nomeDoCara)
+        public override Task OnConnected()
         {
-            Clients.All.hello(nomeDoCara);
+            return base.OnConnected();
         }
 
+        public override Task OnReconnected()
+        {
+            return base.OnReconnected();
+        }
     }
 }

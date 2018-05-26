@@ -12,5 +12,10 @@ namespace Lampadas.Controllers
         {
             return View();
         }
+
+        public ActionResult Log()
+        {
+            return View();
+        }
     }
 }
