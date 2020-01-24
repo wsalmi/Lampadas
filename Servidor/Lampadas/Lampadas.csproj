@@ -1460,8 +1460,13 @@
     <Content Include="Content\glide-master\tests\unit\object.test.js" />
     <Content Include="Content\glide-master\tests\unit\string.test.js" />
     <Content Include="Content\glide-master\tests\unit\unit.test.js" />
-    <Content Include="Content\img\lampada-apagada.png" />
-    <Content Include="Content\img\lampada-ligada.png" />
+    <Content Include="Content\img\banco.svg" />
+    <Content Include="Content\img\cat.gif" />
+    <Content Include="Content\img\chao.png" />
+    <Content Include="Content\img\lamp-off.png" />
+    <Content Include="Content\img\lamp-on.png" />
+    <Content Include="Content\img\mesa.svg" />
+    <Content Include="Content\img\tv.svg" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\style.css" />
     <Content Include="favicon.ico" />
