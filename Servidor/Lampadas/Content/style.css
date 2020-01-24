@@ -1,13 +1,22 @@
 /* Safari 4.0 - 8.0 */
 @-webkit-keyframes opacidade {
-    from {opacity: 0.2;}
-    to {opacity: 1;}
+    from {
+        opacity: 0.2;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
 
 /* Standard syntax */
 @keyframes opacidade {
-    from {opacity: 0.8;}
-    to {opacity: 1;}
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
 }
 
 html, body {
@@ -15,164 +24,149 @@ html, body {
     margin: 0px;
     box-sizing: border-box;
     height: auto;
-    background-color: #004e9e;
+    background-color: #f3f3f3;
 }
 
-.col{
-	padding: 5px !important;
+.col {
+    padding: 5px !important;
 }
 
-.title-box{
-	font-size: 45px;
-	color: #cad400;
-	font-family: sans-serif, arial, hevetica;
-	font-weight: 500;
-	font-style: normal;
-	font-stretch: normal;
-	line-height: 1.15;
-	letter-spacing: -0.9px;
-	word-wrap:  break-word;  
-	white-space: normal;
+.title-box {
+    font-size: 45px;
+    color: #cad400;
+    font-family: Dax;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.15;
+    letter-spacing: -0.9px;
+    word-wrap: break-word;
+    white-space: normal;
 }
 
-.text-header{
-	font-size: 25px;
-	color: #000;
-	font-family: sans-serif, arial, hevetica;
-	font-weight: 300;
-	font-style: normal;
-	font-stretch: normal;
-	line-height: 1.15;
-	letter-spacing: -0.9px;
-	word-wrap:  break-word;  
-	white-space: normal;
+.text-header {
+    font-size: 25px;
+    color: #fff;
+    font-family: sans-serif, arial, hevetica;
+    font-weight: 300;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.15;
+    letter-spacing: -0.9px;
+    word-wrap: break-word;
+    white-space: normal;
 }
 
-.lead{
-
-	font-size: 12px;
+.lead {
+    font-size: 12px;
 }
 
-.card-header{
-	font-size: 12px;
+.card-header {
+    font-size: 12px;
 }
 
-.wrapper{
-	width: 100%;
-	height: 100%;
-	display: block;
-	position: relative;
-	/*background-color: #c3c3c3;*/
-	background-color: #004e9e;
-	padding-bottom: 1rem;
+.wrapper {
+    width: 100%;
+    height: 100%;
+    display: block;
+    position: relative;
+    padding-bottom: 1rem;
 }
 
-.text-ms{
-	font-size: 14px;
-	font-style: italic;
-	text-align: center;
+.text-ms {
+    font-size: 14px;
+    font-style: italic;
+    text-align: center;
 }
 
-.card-body{
-	padding-left: 10px !important;
-	padding-right: 10px !important;
+.card-body {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
 }
 
-.panel-lampadas .box-title{
-	color: #fff;
-	font-size: 25px;
-	font-weight: 800;
-	font-family: sans-serif;
-	margin-top: 15px;
+.panel-lampadas .box-title {
+    color: #000;
+    font-size: 25px;
+    font-weight: 800;
+    font-family: sans-serif;
+    margin-top: 15px;
 }
 
 
 
 /*acender/apagar lâmpadas normais*/
 
-.lampada-on:after {
-    content: "";
-    position: absolute;
-    top: 5px;
-    left: 0;
+.lampadas {
+    transition: ease-in-out 200ms;
+        width: 100%;
+        height: 120px;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+}
+
+    .lampadas.lampada-on {
+        background-image: url('img/lamp-on.png') !important;
+        animation-name: opacidade;
+        animation-duration: 500ms;
+    }
+
+
+
+    .lampadas.lampada-off {
+        background-image: url('img/lamp-off.png');
+        transform: scale(1);
+        z-index: 1;
+    }
+
+.img-hackathon {
     width: 100%;
-    height: 120px;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-image: url('img/lampada-ligada.png');
-    background-position: center;
-    animation-name: opacidade;
-    animation-duration: 4s;
+    display: block;
+    position: relative;
 }
 
-.lampada-on:before{
-	content: " ";
-    position: absolute;
-    top: 20px;
-    left: 25%;
-    width: 50px;
-    height: 50px;
-    box-shadow: 0px 0px 110px yellow;
-    border-radius: 40px;
-    z-index: 0;
-}
-
-.lampada-off {
+.img-fases-next {
     width: 100%;
-    height: 120px;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-image: url('img/lampada-apagada.png');
-    background-position: center;
-    z-index: 1;
+    display: block;
+    position: relative;
 }
 
-.img-hackathon{
-	width: 100%;
-	display: block;
-	position: relative;
-}
-
-.img-fases-next{
-	width: 100%;
-	display: block;
-	position: relative;
-}
-.img-fases-prev{
-	width: 100%;
-	display: block;
-	position: relative;
+.img-fases-prev {
+    width: 100%;
+    display: block;
+    position: relative;
 }
 
 
-.jumbotron{
-	background-color: #fff;
-	padding: 2rem 0.5rem;
+.jumbotron {
+    background-color: #fff;
+    padding: 2rem 0.5rem;
 }
 
-.img-hackathon-on{
-	width: 100%;
-	display: block;
-	position: relative;
-	box-shadow: 0px 0px 0px yellow;
+.img-hackathon-on {
+    width: 100%;
+    display: block;
+    position: relative;
+    box-shadow: 0px 0px 0px yellow;
 }
 
-.yellow-jumbotron{
-	background-color: #f1f083 !important;
+.yellow-jumbotron {
+    background-color: #f1f083 !important;
 }
 
-.box-slide{
-	background-color: rgba(16, 16, 16, 0.45);
-	display: block;
-	position: relative;
-	min-height: 200px;
+.box-slide {
+    background-color: rgba(16, 16, 16, 0.45);
+    display: block;
+    position: relative;
+    min-height: 200px;
 }
 
-.right{
-	background-color: #f5f5eb;
+.right {
+    background-color: #f5f5eb;
 }
-.incorrect{
-	background-color: #f5f5eb;
+
+.incorrect {
+    background-color: #f5f5eb;
 }
 
 /*acender/apagar lâmpadas dentro das fases*/
@@ -182,7 +176,7 @@ html, body {
     height: 50px;
     background-size: contain;
     background-repeat: no-repeat;
-    background-image: url('img/lampada-ligada.png');
+    background-image: url('img/lamp-on.png');
     background-position: center;
 }
 
@@ -191,38 +185,78 @@ html, body {
     height: 50px;
     background-size: contain;
     background-repeat: no-repeat;
-    background-image: url('img/lampada-apagada.png');
+    background-image: url('img/lamp-off.png');
     background-position: center;
 }
 
-.title-fases{
-	height: 110px;
-	background-color: #07325e;
-	font-size: 25px;
-	color: #cad400;
-	position: absolute;
-	top: -10%;
-	left: 10%;
-	padding-right: 80px;
-	padding-left: 30px;
-	transform: rotate(-3deg);
-	padding-top: 10px;
-
-	font-weight: 700;
-	font-style: normal;
-	font-stretch: normal;
-	line-height: 1.15;
+.title-fases {
+    height: 110px;
+    background-color: #07325e;
+    font-size: 25px;
+    color: #cad400;
+    position: absolute;
+    top: -10%;
+    left: 10%;
+    padding-right: 80px;
+    padding-left: 30px;
+    transform: rotate(-3deg);
+    padding-top: 10px;
+    font-weight: 700;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.15;
 }
 
-.blockquote-footer{
-	font-size: 14px;
+.blockquote-footer {
+    font-size: 14px;
 }
 
-.text-direction{
-	font-size: 12px;
-	font-weight: 700;
-	font-style: normal;
-	font-stretch: normal;
-	line-height: 1.15;
-	text-align: center;
+.text-direction {
+    font-size: 12px;
+    font-weight: 700;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.15;
+    text-align: center;
 }
+
+.cenario {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+}
+
+    .cenario .cat {
+        position: absolute;
+        bottom: 100px;
+        right: 20px;
+        height: 150px;
+        margin: -50px;
+        z-index: 100;
+    }
+
+    .cenario .banco {
+        position: absolute;
+        bottom: 0;
+        height: 100px;
+        right: 0;
+        z-index: 50;
+    }
+
+    .cenario .mesa {
+        position: absolute;
+        bottom: 0;
+        height: 50px;
+        left: 50px;
+        z-index: 50;
+    }
+
+    .cenario .tv {
+        position: absolute;
+        bottom: 43px;
+        height: 200px;
+        left: 48px;
+        z-index: 50;
+    }
