@@ -19,6 +19,10 @@
             // Apagar todos os cards!
         }
 
+        hubTest.client.mudarTime = function (time) {
+            $("#nomeEquipe").text(time.Nome);
+        }  
+
         $.connection.hub.stateChanged(function (s, e, c) {
             if (s.newState != 0)
                 $.connection.hub.start();

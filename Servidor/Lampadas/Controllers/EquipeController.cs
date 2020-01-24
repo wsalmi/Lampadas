@@ -72,7 +72,7 @@ namespace Lampadas.Controllers
         {
             var equipes = Data.Equipes.Select(e => e.Value);
 
-            if (codEquipe.HasValue && codEquipe > 0)
+            if (codEquipe.HasValue)
                 equipes = equipes.Where(e => e.CodEquipe == codEquipe);
             else
                 equipes = equipes.Where(e => e.CodEquipe > 0);
