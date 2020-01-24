@@ -7,27 +7,16 @@
         var hubTest = $.connection.mainHub;
         var card = $('#TemplateCard').find('li#second-child').clone();
 
-        hubTest.client.hello = function (nomeDoCara) {
-            $('#DataHora').html(nomeDoCara);
-        }
-
-        hubTest.client.acender = function (lampada, seconds) { 
+        hubTest.client.acender = function (lampada, seconds) {
             $('#lampada-' + lampada).addClass('lampada-on');
-            //glide.destroy();
-            //$('#TemplateCard').append(card.html());
-            //card.addClass("active");
-            //card.find('#TituloCard').html('teste');
-            //card.find('.segundos').html(seconds + 'ms');
-            //glide.mount();
         }
 
         hubTest.client.apagar = function (lampada, seconds) {
             $('#lampada-' + lampada).removeClass('lampada-on');
-            //glide.destroy();
-            //$('#TemplateCard').html(card.html());
-            //card.find('#TituloCard').html('teste');
-            //card.find('.segundos').html(seconds + 'ms');
-            //glide.mount();
+        }
+
+        hubTest.client.reiniciar = function () {
+            // Apagar todos os cards!
         }
 
         $.connection.hub.stateChanged(function (s, e, c) {
@@ -37,5 +26,15 @@
 
         $.connection.hub.start();
 
+        $.getJSON('./api/lampada/status', (data) => {
+            for (var i in data) {
+                var lamapda = $('#lampada-' + data[i]['id-lampada']);
+
+                if (data[i]['status'])
+                    lamapda.addClass('lampada-on');
+                else
+                    lamapda.removeClass('lampada-on');
+            }
+        });
     </script>
 }

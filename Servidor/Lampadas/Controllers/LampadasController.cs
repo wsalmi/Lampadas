@@ -14,77 +14,48 @@ using Lampadas.Models;
 using Microsoft.AspNet.SignalR;
 using System.Collections.Concurrent;
 using Lampadas.Exceptions;
+using System.Runtime.Serialization;
+using Lampadas.Store;
 
 namespace Lampadas.Controllers
 {
     [RoutePrefix("api/lampada")]
     public class LampadasController : ApiController
     {
-        public static DateTime Last;
-        public static ConcurrentDictionary<byte, bool> Lampadas;
-        public static ConcurrentBag<string> Tokens = new ConcurrentBag<string>();
-        public static ConcurrentDictionary<byte, TimeData> Times = new ConcurrentDictionary<byte, TimeData>();
-
-        public static byte TimeAutorizado = 0;
-
-        public LampadasController()
+        [HttpGet, Route("status")]
+        public IEnumerable<LampadaData> GetStatus()
         {
-            if (Lampadas == null)
-            {
-                Lampadas = new ConcurrentDictionary<byte, bool>();
-                Lampadas.TryAdd(1, false);
-                Lampadas.TryAdd(2, false);
-                Lampadas.TryAdd(3, false);
-                Lampadas.TryAdd(4, false);
-                Lampadas.TryAdd(5, false);
-                Lampadas.TryAdd(6, false);
-                Lampadas.TryAdd(7, false);
-                Lampadas.TryAdd(8, false);
-                Lampadas.TryAdd(9, false);
-                Lampadas.TryAdd(10, false);
-            }
+            return Data.Lampadas.ToList().OrderBy(e => e.Key).Select(l => l.Value);
         }
 
-        [HttpGet, Route("status")]
-        public async Task<IEnumerable<object>> Get()
+        [HttpPut, Route("status/limpar")]
+        public IHttpActionResult PutStatusLimpar()
         {
-            return await Task.Run<IEnumerable<object>>(() =>
-            {
-                return Lampadas.ToList().OrderBy(e => e.Key).Select(l => new { Lampada = l.Key, Status = l.Value });
-            });
+            ApagarTodas();
+            return Ok(new { mensagem = "Todas apagadas!" });
         }
 
         [HttpPut, Route("{idLampada}/status")]
-        public IHttpActionResult Post([FromBody]PostData data, [FromUri]byte idLampada)
+        public IHttpActionResult PutStatus([FromBody]PostData data, [FromUri]byte idLampada)
         {
             var hubContext = GlobalHost.ConnectionManager.GetHubContext<MainHub>();
 
-            if (Lampadas.ContainsKey(idLampada))
-            {
-                //if (Tokens.IsEmpty || token == TestToken || Tokens.Contains(token))
-                //if (Tokens.Contains(token))
-                //{
+            if (Data.EquipeAutorizada != data.IdEquipe)
+                return Unauthorized();
 
-                var agora = DateTime.Now;
-                Lampadas[idLampada] = data.status;
-                var seconds = (agora - Last).TotalMilliseconds;
-                if (data.status)
+            if (Data.Lampadas.ContainsKey(idLampada))
+            {
+                var lampada = Data.Lampadas[idLampada];
+                var seconds = Convert.ToUInt64((DateTime.Now - lampada.UltimaAlteracao).TotalMilliseconds);
+
+                if (data.Status)
                     hubContext.Clients.All.acender(idLampada, seconds);
                 else
                     hubContext.Clients.All.apagar(idLampada, seconds);
 
-                Last = agora;
+                Data.Lampadas[idLampada].Status = data.Status;
 
-                return Ok(new { lampada = idLampada, status = data.status ? "Acesa" : "Apagada" });
-
-                //}
-                //else
-                //{
-                //if (data.status)
-                //hubContext.Clients.All.testeAcender(idLampada);
-                //else
-                //hubContext.Clients.All.testeApagar(idLampada);
-                //}
+                return Ok(new { lampada = idLampada, status = data.Status ? "Acesa" : "Apagada" });
             }
             else
             {
@@ -93,16 +64,29 @@ namespace Lampadas.Controllers
 
         }
 
-        public struct PostData
+        public static void ApagarTodas()
         {
-            public byte idEquipe;
-            public bool status;
+            var hubContext = GlobalHost.ConnectionManager.GetHubContext<MainHub>();
+
+            foreach (var item in Data.Lampadas)
+            {
+                item.Value.Status = false;
+                hubContext.Clients.All.apagar(item.Key, 0);
+            }
+
+            hubContext.Clients.All.reiniciar();
         }
 
-        public struct TimeData
+        [DataContract]
+        public struct PostData
         {
-            byte CodTime;
-            string Nome;
+            [DataMember(Name = "idEquipe")]
+            public byte IdEquipe { get; set; }
+
+            [DataMember(Name = "status")]
+            public bool Status { get; set; }
         }
+
+
     }
 }

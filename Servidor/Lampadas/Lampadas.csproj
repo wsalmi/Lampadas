@@ -224,7 +224,8 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MainHub.cs" />
     <Compile Include="Controllers\LampadasController.cs" />
-    <Compile Include="Controllers\TokenController.cs" />
+    <Compile Include="Controllers\EquipeController.cs" />
+    <Compile Include="Store\Data.cs" />
     <Compile Include="Exceptions\MalandraoException.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -237,6 +238,8 @@
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="Store\LampadaData.cs" />
+    <Compile Include="Store\TimeData.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-grid.css" />
@@ -1581,6 +1584,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Scripts\app\" />
+    <Folder Include="Views\Time\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

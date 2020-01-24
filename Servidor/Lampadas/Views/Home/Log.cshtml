@@ -29,15 +29,14 @@
         hubTest.client.apagar = function (lampada, seconds) {
             $("#log").prepend("<li>Apagou - Lampada: " + lampada + " -> " + seconds + "</li>");
         }
-
-
-        hubTest.client.testeAcender = function (lampada, seconds) {
-            $("#log").prepend("<li class='teste'>Acendeu - Lampada: " + lampada + "</li>");
+        
+        hubTest.client.reiniciar = function () {
+            $("#log").prepend("<li class='teste'>Reiniciar!</li>");
         }
 
-        hubTest.client.testeApagar = function (lampada, seconds) {
-            $("#log").prepend("<li class='teste'>Apagou - Lampada: " + lampada + "</li>");
-        }
+        hubTest.client.mudarTime = function (time) {
+            $("#log").prepend("<li>O time mudou! - Novo -> " + time.Nome + "</li>");
+        }      
 
         $.connection.hub.stateChanged(function (s, e, c) {
             if (s.newState != 0)
