@@ -7,11 +7,11 @@
         var hubTest = $.connection.mainHub;
         var card = $('#TemplateCard').find('li#second-child').clone();
 
-        hubTest.client.acender = function (lampada, seconds) {
+        hubTest.client.acender = function (lampada, utlimaAlteracaoLampada, ultimaInteracao) {
             $('#lampada-' + lampada).addClass('lampada-on');
         }
 
-        hubTest.client.apagar = function (lampada, seconds) {
+        hubTest.client.apagar = function (lampada, utlimaAlteracaoLampada, ultimaInteracao) {
             $('#lampada-' + lampada).removeClass('lampada-on');
         }
 
@@ -21,24 +21,39 @@
 
         hubTest.client.mudarTime = function (time) {
             $("#nomeEquipe").text(time.Nome);
-        }  
+        }
 
         $.connection.hub.stateChanged(function (s, e, c) {
             if (s.newState != 0)
-                $.connection.hub.start();
+                Reiniciar();
         });
 
-        $.connection.hub.start();
+        function Reiniciar() {
+            $.connection.hub.start();
 
-        $.getJSON('./api/lampada/status', (data) => {
-            for (var i in data) {
-                var lamapda = $('#lampada-' + data[i]['id-lampada']);
+            $.getJSON('./api/lampada/status', (data) => {
+                for (var i in data) {
+                    var lamapda = $('#lampada-' + data[i]['id-lampada']);
 
-                if (data[i]['status'])
-                    lamapda.addClass('lampada-on');
-                else
-                    lamapda.removeClass('lampada-on');
-            }
-        });
+                    if (data[i]['status'])
+                        lamapda.addClass('lampada-on');
+                    else
+                        lamapda.removeClass('lampada-on');
+                }
+            });
+
+            $.getJSON('./api/equipe', (data) => {
+                for (var i in data) {
+                    if (data[i]['autorizada']) {
+                        $("#nomeEquipe").text(data[i].nome);
+                        return;
+                    }
+                }
+
+                $("#nomeEquipe").text(data[0].nome);
+            });
+        }
+
+        Reiniciar();
     </script>
 }

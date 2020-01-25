@@ -3,7 +3,7 @@
 }
 <style>
     * {
-        color: white;
+        color: black;
     }
 
     li.teste {
@@ -22,12 +22,12 @@
         var hubTest = $.connection.mainHub;
         var card = $('#TemplateCard').find('li#second-child').clone();
 
-        hubTest.client.acender = function (lampada, seconds) {
-            $("#log").prepend("<li>Acendeu - Lampada: " + lampada + " -> " + seconds + "</li>");
+        hubTest.client.acender = function (lampada, utlimaAlteracaoLampada, ultimaInteracao) {
+            $("#log").prepend("<li>Acendeu - Lampada: " + lampada + " -> Ultima interação lampada: " + utlimaAlteracaoLampada + " | Ultima interação: " + ultimaInteracao + "</li>");
         }
 
-        hubTest.client.apagar = function (lampada, seconds) {
-            $("#log").prepend("<li>Apagou - Lampada: " + lampada + " -> " + seconds + "</li>");
+        hubTest.client.apagar = function (lampada, utlimaAlteracaoLampada, ultimaInteracao) {
+            $("#log").prepend("<li>Apagou - Lampada: " + lampada + " -> Ultima interação lampada: " + utlimaAlteracaoLampada + " | Ultima interação: " + ultimaInteracao + "</li>");
         }
         
         hubTest.client.reiniciar = function () {

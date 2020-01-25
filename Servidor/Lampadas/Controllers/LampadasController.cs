@@ -1,21 +1,11 @@
-﻿using System;
+﻿using Lampadas.Exceptions;
+using Lampadas.Store;
+using Microsoft.AspNet.SignalR;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Http;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
-using Owin;
-using Lampadas.Models;
-using Microsoft.AspNet.SignalR;
-using System.Collections.Concurrent;
-using Lampadas.Exceptions;
 using System.Runtime.Serialization;
-using Lampadas.Store;
+using System.Web.Http;
 
 namespace Lampadas.Controllers
 {
@@ -40,20 +30,22 @@ namespace Lampadas.Controllers
         {
             var hubContext = GlobalHost.ConnectionManager.GetHubContext<MainHub>();
 
-            if (Data.EquipeAutorizada != data.IdEquipe)
-                return Unauthorized();
-
             if (Data.Lampadas.ContainsKey(idLampada))
             {
-                var lampada = Data.Lampadas[idLampada];
-                var seconds = Convert.ToUInt64((DateTime.Now - lampada.UltimaAlteracao).TotalMilliseconds);
+                if (Data.EquipeAutorizada == data.CodEquipe)
+                {
+                    var lampada = Data.Lampadas[idLampada];
+                    var ultimaInteracao = Convert.ToUInt64(Math.Floor((DateTime.Now - Data.UltimaInteracao).TotalMilliseconds / 100) * 100);
+                    var ultimaInteracaoLampada = Convert.ToUInt64(Math.Floor((DateTime.Now - lampada.UltimaAlteracao).TotalMilliseconds / 100) * 100);
 
-                if (data.Status)
-                    hubContext.Clients.All.acender(idLampada, seconds);
-                else
-                    hubContext.Clients.All.apagar(idLampada, seconds);
+                    if (data.Status)
+                        hubContext.Clients.All.acender(idLampada, ultimaInteracaoLampada, ultimaInteracao);
+                    else
+                        hubContext.Clients.All.apagar(idLampada, ultimaInteracaoLampada, ultimaInteracao);
 
-                Data.Lampadas[idLampada].Status = data.Status;
+                    Data.Lampadas[idLampada].Status = data.Status;
+                    Data.UltimaInteracao = lampada.UltimaAlteracao;
+                }
 
                 return Ok(new { lampada = idLampada, status = data.Status ? "Acesa" : "Apagada" });
             }
@@ -61,7 +53,6 @@ namespace Lampadas.Controllers
             {
                 return InternalServerError(new MalandraoException("Tsc tsc tsc... Essa lampada não existe!"));
             }
-
         }
 
         public static void ApagarTodas()
@@ -81,12 +72,10 @@ namespace Lampadas.Controllers
         public struct PostData
         {
             [DataMember(Name = "idEquipe")]
-            public byte IdEquipe { get; set; }
+            public byte CodEquipe { get; set; }
 
             [DataMember(Name = "status")]
             public bool Status { get; set; }
         }
-
-
     }
 }

@@ -12,7 +12,7 @@ namespace Lampadas
         private static byte equipeAutorizada = 0;
         public static ConcurrentDictionary<byte, EquipeData> Equipes = new ConcurrentDictionary<byte, EquipeData>(SeedEquipes());
         public static ConcurrentDictionary<byte, LampadaData> Lampadas = new ConcurrentDictionary<byte, LampadaData>(SeedLampadas());
-
+        public static DateTime UltimaInteracao { get; set; }
         public static byte EquipeAutorizada
         {
             get => equipeAutorizada;
@@ -22,6 +22,7 @@ namespace Lampadas
                 DefinirNomeEquipe(equipeAutorizada);
             }
         }
+
 
         private static void DefinirNomeEquipe(byte equipeAutorizada)
         {
