@@ -1,4 +1,5 @@
-﻿using System;
+﻿using System.Threading;
+using System;
 
 namespace _NET
 {
@@ -9,26 +10,50 @@ namespace _NET
 
         static void Main(string[] args)
         {
-            lampadaStatus(1, false);
-            lampadaStatus(1, true);
-            lampadaStatus(2, false);
-            lampadaStatus(2, true);
-            lampadaStatus(3, false);
-            lampadaStatus(3, true);
-            lampadaStatus(4, false);
-            lampadaStatus(4, true);
-            lampadaStatus(5, false);
-            lampadaStatus(5, true);
-            lampadaStatus(6, false);
-            lampadaStatus(6, true);
-            lampadaStatus(7, false);
-            lampadaStatus(7, true);
-            lampadaStatus(8, false);
-            lampadaStatus(8, true);
-            lampadaStatus(9, false);
-            lampadaStatus(9, true);
-            lampadaStatus(10, false);
-            lampadaStatus(10, true);
+            var delay = 500;
+            while (true)
+            {
+                lampadaStatus(1, false);
+                Thread.Sleep(delay);
+                lampadaStatus(1, true);
+                Thread.Sleep(delay);
+                lampadaStatus(2, false);
+                Thread.Sleep(delay);
+                lampadaStatus(2, true);
+                Thread.Sleep(delay);
+                lampadaStatus(3, false);
+                Thread.Sleep(delay);
+                lampadaStatus(3, true);
+                Thread.Sleep(delay);
+                lampadaStatus(4, false);
+                Thread.Sleep(delay);
+                lampadaStatus(4, true);
+                Thread.Sleep(delay);
+                lampadaStatus(5, false);
+                Thread.Sleep(delay);
+                lampadaStatus(5, true);
+                Thread.Sleep(delay);
+                lampadaStatus(6, false);
+                Thread.Sleep(delay);
+                lampadaStatus(6, true);
+                Thread.Sleep(delay);
+                lampadaStatus(7, false);
+                Thread.Sleep(delay);
+                lampadaStatus(7, true);
+                Thread.Sleep(delay);
+                lampadaStatus(8, false);
+                Thread.Sleep(delay);
+                lampadaStatus(8, true);
+                Thread.Sleep(delay);
+                lampadaStatus(9, false);
+                Thread.Sleep(delay);
+                lampadaStatus(9, true);
+                Thread.Sleep(delay);
+                lampadaStatus(10, false);
+                Thread.Sleep(delay);
+                lampadaStatus(10, true);
+                Thread.Sleep(delay);
+            }
         }
     }
 }

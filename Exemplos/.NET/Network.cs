@@ -8,9 +8,9 @@ public class Network
 
     public Network()
     {
-        codEquipe = 1;
-        httpClient = new RestSharp.RestClient("http://localhost:17060");
-        //httpClient = new RestSharp.RestClient("http://SOALV3DFGC01:8080");
+        codEquipe = 0;
+        // httpClient = new RestSharp.RestClient("http://localhost:17060");
+        httpClient = new RestSharp.RestClient("http://SOALV3DFGC01:8080/hack");
     }
 
     public LampadaPutResponseBody AtualizaStatus(byte codLampada, bool status)
@@ -19,7 +19,7 @@ public class Network
             resource: $"/api/lampada/{codLampada}/status", 
             request: new LampadaPutRequestBody
             {
-                CodEquipe = codEquipe,
+                IdEquipe = codEquipe,
                 Status = status, 
             })).Data;
     }
@@ -30,8 +30,8 @@ public class Network
         [DataMember(Name = "status")]
         public bool Status { get; internal set; }
 
-        [DataMember(Name = "cod-equipe")]
-        public int CodEquipe { get; internal set; }
+        [DataMember(Name = "idEquipe")]
+        public int IdEquipe { get; internal set; }
     }
 
     [DataContract]
