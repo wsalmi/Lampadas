@@ -47,6 +47,10 @@ namespace Lampadas.Controllers
                 Data.EquipeAutorizada = 0;
             }
 
+            var equipeAtual = Data.Equipes[equipe.CodEquipe];
+
+            equipe.Nome = equipe.Nome ?? equipeAtual.Nome;
+
             Data.Equipes[equipe.CodEquipe] = (EquipeData)equipe;
 
             return Ok(new { mensagem = "Equipe atualizada com sucesso" });
@@ -74,12 +78,9 @@ namespace Lampadas.Controllers
 
             if (codEquipe.HasValue)
                 equipes = equipes.Where(e => e.CodEquipe == codEquipe);
-            else
-                equipes = equipes.Where(e => e.CodEquipe > 0);
 
-            return Ok(equipes);
+            return Ok(equipes.ToDictionary(e => e.CodEquipe, e => e));
         }
-
 
         [DataContract]
         public class PostData
