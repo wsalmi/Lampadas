@@ -8,21 +8,42 @@
         var card = $('#TemplateCard').find('li#second-child').clone();
         var id = 0;
         var scrollH = 0;
-        hubTest.client.acender = function (lampada, seconds) {
+        hubTest.client.acender = function (lampada, utlimaAlteracaoLampada, ultimaInteracao) {
+            let estadoAnterior = $('#lampada-' + lampada).hasClass('lampada-off') ? 'lampada-off' : 'lampada-on';
             $('#lampada-' + lampada).removeClass('lampada-off');
             $('#lampada-' + lampada).addClass('lampada-on');
 
-            $('#interacoes').append("<div id='interacao" + id + "' class='card-interacao'>Acendeu em " + seconds + "</div>");
+            $('#interacoes').append("<div id='interacao" + id + "' class='card-interacao'></div>");
 
-            scrollH += $('#interacao' + id).offset().left;
+            $('#interacao' + id).append("<div class='numero'>" + id + "</div>");
+            $('#interacao' + id).append("<div class='id-lampada'>" + lampada + "</div>");
+            $('#interacao' + id).append("<div class='estado-anterior'>" + estadoAnterior + "</div>");
+            $('#interacao' + id).append("<div class='estado-atual'>lampada-on</div>");
+            $('#interacao' + id).append("<div class='tempo'>" + utlimaAlteracaoLampada + "</div>");
+
+            scrollH += $('#interacao' + id).offset().left*2;
             $('#interacoes').scrollLeft(scrollH)
             console.log(scrollH)
             id++;
         }
 
         hubTest.client.apagar = function (lampada, utlimaAlteracaoLampada, ultimaInteracao) {
+            let estadoAnterior = $('#lampada-' + lampada).hasClass('lampada-off') ? 'lampada-off' : 'lampada-on';
             $('#lampada-' + lampada).removeClass('lampada-on');
             $('#lampada-' + lampada).addClass('lampada-off');
+
+            $('#interacoes').append("<div id='interacao" + id + "' class='card-interacao'></div>");
+
+            $('#interacao' + id).append("<div class='numero'>" + id + "</div>");
+            $('#interacao' + id).append("<div class='id-lampada'>" + lampada + "</div>");
+            $('#interacao' + id).append("<div class='estado-anterior'>" + estadoAnterior + "</div>");
+            $('#interacao' + id).append("<div class='estado-atual'>lampada-off</div>");
+            $('#interacao' + id).append("<div class='tempo'>" + utlimaAlteracaoLampada + "</div>");
+
+            scrollH += $('#interacao' + id).offset().left*2;
+            $('#interacoes').scrollLeft(scrollH)
+            console.log(scrollH)
+            id++;
         }
 
         hubTest.client.reiniciar = function () {
