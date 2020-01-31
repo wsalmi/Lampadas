@@ -1,21 +1,21 @@
-/* Safari 4.0 - 8.0 */
-@-webkit-keyframes opacidade {
+/* Standard syntax */
+@keyframes acende {
     from {
-        opacity: 0.2;
+        transform: scale(1);
     }
 
     to {
-        opacity: 1;
+        transform: scale(1.2);
     }
 }
 
-/* Standard syntax */
-@keyframes opacidade {
-    0%, 100% {
-        transform: scale(1);
-    }
-    50% {
+@keyframes apaga {
+    from {
         transform: scale(1.2);
+    }
+
+    to {
+        transform: scale(1);
     }
 }
 
@@ -97,26 +97,27 @@ html, body {
 /*acender/apagar lâmpadas normais*/
 
 .lampadas {
-    transition: ease-in-out 200ms;
-        width: 100%;
-        height: 120px;
-        background-size: contain;
-        background-repeat: no-repeat;
-        background-position: center;
+    width: 100%;
+    height: 120px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
     .lampadas.lampada-on {
         background-image: url('img/lamp-on.png') !important;
-        animation-name: opacidade;
-        animation-duration: 500ms;
+        animation-name: acende;
+        animation-duration: 100ms;
+        transform: scale(1.2);
     }
 
 
 
     .lampadas.lampada-off {
         background-image: url('img/lamp-off.png');
-        transform: scale(1);
-        z-index: 1;
+        animation-name: apaga;
+        animation-duration: 100ms;
+        transform: scale(1)
     }
 
 .img-hackathon {
@@ -226,6 +227,7 @@ html, body {
     left: 0;
     width: 100vw;
     height: 100vh;
+    pointer-events: none;
 }
 
     .cenario .cat {
@@ -260,3 +262,28 @@ html, body {
         left: 48px;
         z-index: 50;
     }
+
+.interacoes {
+    -webkit-overflow-scrolling: touch;
+    width: 100%;
+    background-color: white;
+    white-space: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+    .interacoes .card-interacao {
+        height: 300px;
+        width: 200px;
+        background-color: greenyellow;
+        margin: 50px 25px;
+        display: inline-block;
+    }
+
+        .interacoes .card-interacao:last-child {
+            margin-right: calc(50% - 100px);
+        }
+
+        .interacoes .card-interacao:first-child {
+            margin-left: calc(50% - 100px);
+        }
