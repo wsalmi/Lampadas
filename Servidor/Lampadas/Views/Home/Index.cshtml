@@ -4,87 +4,93 @@
     <script src="@Url.Content("~/signalr/hubs")"></script>
 
     <script>
-        var hubTest = $.connection.mainHub;
-        var card = $('#TemplateCard').find('li#second-child').clone();
-        var id = 0;
-        var scrollH = 0;
+        let id = 0;
+        let scrollH = 0;
+        let hubTest = $.connection.mainHub;
+        let card = $('#TemplateCard').find('li#second-child').clone();
+        let $interacoes = $("#interacoes");
+        let $nomeEquipe = $("#nomeEquipe");
+
         hubTest.client.acender = function (lampada, utlimaAlteracaoLampada, ultimaInteracao) {
-            let estadoAnterior = $('#lampada-' + lampada).hasClass('lampada-off') ? 'lampada-off' : 'lampada-on';
-            $('#lampada-' + lampada).removeClass('lampada-off');
-            $('#lampada-' + lampada).addClass('lampada-on');
-
-            $('#interacoes').append("<div id='interacao" + id + "' class='card-interacao'></div>");
-
-            $('#interacao' + id).append("<div class='numero'>" + id + "</div>");
-            $('#interacao' + id).append("<div class='id-lampada'>" + lampada + "</div>");
-            $('#interacao' + id).append("<div class='estado-anterior'>" + estadoAnterior + "</div>");
-            $('#interacao' + id).append("<div class='estado-atual'>lampada-on</div>");
-            $('#interacao' + id).append("<div class='tempo'>" + utlimaAlteracaoLampada + "</div>");
-
-            scrollH += $('#interacao' + id).offset().left*2;
-            $('#interacoes').scrollLeft(scrollH)
-            console.log(scrollH)
-            id++;
+            Interacao(true, lampada, utlimaAlteracaoLampada);
         }
 
         hubTest.client.apagar = function (lampada, utlimaAlteracaoLampada, ultimaInteracao) {
-            let estadoAnterior = $('#lampada-' + lampada).hasClass('lampada-off') ? 'lampada-off' : 'lampada-on';
-            $('#lampada-' + lampada).removeClass('lampada-on');
-            $('#lampada-' + lampada).addClass('lampada-off');
-
-            $('#interacoes').append("<div id='interacao" + id + "' class='card-interacao'></div>");
-
-            $('#interacao' + id).append("<div class='numero'>" + id + "</div>");
-            $('#interacao' + id).append("<div class='id-lampada'>" + lampada + "</div>");
-            $('#interacao' + id).append("<div class='estado-anterior'>" + estadoAnterior + "</div>");
-            $('#interacao' + id).append("<div class='estado-atual'>lampada-off</div>");
-            $('#interacao' + id).append("<div class='tempo'>" + utlimaAlteracaoLampada + "</div>");
-
-            scrollH += $('#interacao' + id).offset().left*2;
-            $('#interacoes').scrollLeft(scrollH)
-            console.log(scrollH)
-            id++;
+            Interacao(false, lampada, utlimaAlteracaoLampada);
         }
 
         hubTest.client.reiniciar = function () {
-            // Apagar todos os cards!
+            $interacoes.empty();
         }
 
         hubTest.client.mudarTime = function (time) {
-            $("#nomeEquipe").text(time.Nome);
+            $nomeEquipe.text(time.Nome);
         }
 
         $.connection.hub.stateChanged(function (s, e, c) {
             if (s.newState != 0)
-                Reiniciar();
+                Recarregar();
         });
 
-        function Reiniciar() {
+        function DefinirStatusLampada(codLampada, estado) {
+            let lampada = $('#lampada-' + codLampada);
+
+            if (estado)
+                lampada.removeClass('lampada-off').addClass('lampada-on');
+            else
+                lampada.removeClass('lampada-on').addClass('lampada-off');
+
+            return lampada;
+        }
+
+        function Interacao(estado, lampada, utlimaAlteracaoLampada) {
+            let estadoAnterior = $('#lampada-' + lampada).hasClass('lampada-on');
+            DefinirStatusLampada(lampada, estado);
+
+            let novaInteracao = $("<div id='interacao" + id + "' class='card-interacao'></div>")
+                .append("<div class='numero'>" + id + "</div>")
+                .append("<div class='id-lampada'>" + lampada + "</div>")
+                .append("<div class='estado-anterior'>" + (estadoAnterior ? "On" : "Off") + "</div>")
+                .append("<div class='estado-atual'>" + (estado ? "On" : "Off") + "</div>")
+                .append("<div class='tempo'>" + utlimaAlteracaoLampada + "</div>")
+
+
+            $interacoes
+                .append(novaInteracao)
+                .scrollLeft(scrollH);
+
+            scrollH += $("#interacao" + id).offset().left * 2;
+
+            console.log(scrollH)
+            id++;
+        }
+
+        function Recarregar() {
             $.connection.hub.start();
 
             $.getJSON('./api/lampada/status', (data) => {
                 for (var i in data) {
-                    var lamapda = $('#lampada-' + data[i]['id-lampada']);
+                    var lampada = $('#lampada-' + data[i]['id-lampada']);
 
                     if (data[i]['status'])
-                        lamapda.addClass('lampada-on');
+                        lampada.removeClass('lampada-off').addClass('lampada-on');
                     else
-                        lamapda.removeClass('lampada-on');
+                        lampada.removeClass('lampada-on').addClass('lampada-off');
                 }
             });
 
             $.getJSON('./api/equipe', (data) => {
                 for (var i in data) {
                     if (data[i]['autorizada']) {
-                        $("#nomeEquipe").text(data[i].nome);
+                        $nomeEquipe.text(data[i].nome);
                         return;
                     }
                 }
 
-                $("#nomeEquipe").text(data[0].nome);
+                $nomeEquipe.text(data[0].nome);
             });
         }
 
-        Reiniciar();
+        Recarregar();
     </script>
 }
