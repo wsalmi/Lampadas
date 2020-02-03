@@ -31,12 +31,22 @@
     }
 }
 
+@keyframes digitando {
+    0%, 49% {
+        color: white;
+    }
+
+    50%, 100% {
+        color: black;
+    }
+}
+
 html, body {
     padding: 0px;
     margin: 0px;
     box-sizing: border-box;
     height: auto;
-    background-color: #f3f3f3;
+    background-color: #011528;
 }
 
 .col {
@@ -44,9 +54,9 @@ html, body {
 }
 
 .title-box {
-    font-size: 45px;
-    color: #cad400;
-    font-family: Dax;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 30px;
+    color: #96BE1E;
     font-weight: 500;
     font-style: normal;
     font-stretch: normal;
@@ -96,11 +106,11 @@ html, body {
     padding-right: 10px !important;
 }
 
-.panel-lampadas .box-title {
-    color: #000;
+.panel-lampadas .box-title p {
+    font-family: 'Press Start 2P', cursive;
+    color: white;
     font-size: 25px;
     font-weight: 800;
-    font-family: sans-serif;
     margin-top: 15px;
 }
 
@@ -117,20 +127,33 @@ html, body {
 }
 
     .lampadas.lampada-on {
-        background-image: url('img/lamp-on.png') !important;
         animation-name: acende;
         animation-duration: 100ms;
         transform: scale(1.2);
     }
 
-
-
     .lampadas.lampada-off {
-        background-image: url('img/lamp-off.png');
-        animation-name: apaga;
+        animation-name: acende;
         animation-duration: 100ms;
-        transform: scale(1)
+        transform: scale(1.2);
     }
+
+.lampada-on {
+    background-image: url('img/lamp-on.png') !important;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.lampada-off {
+    background-image: url('img/lamp-off.png') !important;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+
+
 
 .img-hackathon {
     width: 100%;
@@ -244,8 +267,8 @@ html, body {
 
     .cenario .cat {
         position: absolute;
-        bottom: 100px;
-        right: 20px;
+        bottom: 105px;
+        right: 80px;
         height: 150px;
         margin: -50px;
         z-index: 100;
@@ -267,6 +290,14 @@ html, body {
         z-index: 50;
     }
 
+    .cenario .desk {
+        position: absolute;
+        bottom: 0;
+        height: 200px;
+        right: 20px;
+        z-index: 50;
+    }
+
     .cenario .tv {
         position: absolute;
         bottom: 43px;
@@ -279,7 +310,7 @@ html, body {
         position: absolute;
         bottom: 106px;
         left: 48px;
-        width: 264px;
+        width: 263px;
         height: 138px;
         background-color: black;
         border-radius: 4px 4px 0 0;
@@ -287,29 +318,117 @@ html, body {
         display: flex;
         align-items: center;
         justify-content: center;
-
         color: white;
+        border: 2px solid white;
+        font-family: 'Press Start 2P', cursive;
+        padding: 5px;
     }
+
+        .cenario .tv-screen p:after {
+            content: "|";
+            animation: digitando 1s infinite;
+        }
 
 .interacoes {
     width: 100%;
-    white-space: nowrap;
-    overflow-x: auto;
-    overflow-y: hidden;
-    text-align: right;
+    overflow-y: auto;
+    height: 366px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
 }
 
     .interacoes .card-interacao {
-        height: 300px;
-        width: 200px;
-        background-color: greenyellow;
-        margin: 25px 10px;
+        width: 135px;
+        height: 130px;
+        margin: 25px 5px;
         display: inline-block;
         animation-name: cheguei;
         animation-duration: 100ms;
         text-align: center;
+        position: relative;
+        background-color: #1e376e;
     }
 
-        .interacoes .card-interacao:last-child {
-            margin-right: 0;
+
+        .interacoes .card-interacao .numero {
+            font-family: 'Press Start 2P', cursive;
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            border-radius: 0;
+            padding: 0 5px;
+            min-width: 40px;
+            bottom: -22px;
+            left: -9px;
+            font-size: 11px;
         }
+
+        .interacoes .card-interacao .id-lampada {
+            padding: 5px 10px;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+            .interacoes .card-interacao .id-lampada .lampada-n {
+                font-family: 'Press Start 2P', cursive;
+                position: absolute;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: greenyellow;
+                background: #1e376e;
+                border-radius: 50px;
+                padding: 0 5px;
+                min-width: 60px;
+                height: 40px;
+                top: -15px;
+                font-size: 20px;
+                right: calc(50% - 30px);
+            }
+
+        .interacoes .card-interacao .estado-anterior {
+            height: 40px;
+            width: 50%;
+            display: inline-block;
+        }
+
+        .interacoes .card-interacao .seta {
+            color: white;
+            position: absolute;
+            top: 43px;
+            left: calc(50% - 15px);
+            font-size: 30px;
+        }
+
+        .interacoes .card-interacao .estado-atual {
+            height: 50px;
+            width: 50%;
+            display: inline-block;
+        }
+
+        .interacoes .card-interacao .tempo {
+            margin-top: 10px;
+            margin-bottom: 10px;
+            font-family: 'Press Start 2P', cursive;
+            color: white;
+        }
+
+
+/* width */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #011528;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: white;
+    border-radius: 10px;
+}

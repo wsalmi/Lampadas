@@ -4,19 +4,19 @@
     <script src="@Url.Content("~/signalr/hubs")"></script>
 
     <script>
-        let id = 0;
-        let scrollH = 0;
+        let id = 1;
+        let scrollValue = 0;
         let hubTest = $.connection.mainHub;
         let card = $('#TemplateCard').find('li#second-child').clone();
         let $interacoes = $("#interacoes");
         let $nomeEquipe = $("#nomeEquipe");
 
         hubTest.client.acender = function (lampada, utlimaAlteracaoLampada, ultimaInteracao) {
-            Interacao(true, lampada, utlimaAlteracaoLampada);
+            Interacao(true, lampada, ultimaInteracao);
         }
 
         hubTest.client.apagar = function (lampada, utlimaAlteracaoLampada, ultimaInteracao) {
-            Interacao(false, lampada, utlimaAlteracaoLampada);
+            Interacao(false, lampada, ultimaInteracao);
         }
 
         hubTest.client.reiniciar = function () {
@@ -25,6 +25,9 @@
 
         hubTest.client.mudarTime = function (time) {
             $nomeEquipe.text(time.Nome);
+        }
+
+        hubTest.client.verHistorico = function () {
         }
 
         $.connection.hub.stateChanged(function (s, e, c) {
@@ -49,19 +52,20 @@
 
             let novaInteracao = $("<div id='interacao" + id + "' class='card-interacao'></div>")
                 .append("<div class='numero'>" + id + "</div>")
-                .append("<div class='id-lampada'>" + lampada + "</div>")
-                .append("<div class='estado-anterior'>" + (estadoAnterior ? "On" : "Off") + "</div>")
-                .append("<div class='estado-atual'>" + (estado ? "On" : "Off") + "</div>")
-                .append("<div class='tempo'>" + utlimaAlteracaoLampada + "</div>")
+                .append("<div class='id-lampada'><span class='lampada-n'>"+ lampada +"</span></div>")
+                .append("<div class='estado-anterior " + (estadoAnterior ? "lampada-on" : "lampada-off") + "'></div>")
+                .append("<div class='seta fa fa-arrow-right'></div>")
+                .append("<div class='estado-atual " + (estado ? "lampada-on" : "lampada-off") + "'></div>")
+                .append("<div class='tempo'>" + utlimaAlteracaoLampada + "ms</div>")
 
 
             $interacoes
                 .append(novaInteracao)
-                .scrollLeft(scrollH);
+                .scrollTop(scrollValue);
 
-            scrollH += $("#interacao" + id).offset().left * 2;
+            scrollValue += $("#interacao" + id).offset().top * 2;
 
-            console.log(scrollH)
+            console.log(scrollValue)
             id++;
         }
 
