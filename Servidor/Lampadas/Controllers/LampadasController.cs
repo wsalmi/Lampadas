@@ -35,7 +35,7 @@ namespace Lampadas.Controllers
                 if (Data.EquipeAutorizada == data.CodEquipe)
                 {
                     var lampada = Data.Lampadas[idLampada];
-                    var ultimaInteracao = Convert.ToUInt64(Math.Floor((DateTime.Now - Data.UltimaInteracao).TotalMilliseconds / 100) * 100);
+                    var ultimaInteracao = Convert.ToUInt64(Math.Floor((DateTime.Now - (Data.UltimaInteracao.HasValue ? Data.UltimaInteracao.Value : DateTime.Now)).TotalMilliseconds / 100) * 100);
                     var ultimaInteracaoLampada = Convert.ToUInt64(Math.Floor((DateTime.Now - lampada.UltimaAlteracao).TotalMilliseconds / 100) * 100);
 
                     if (data.Status)
@@ -62,10 +62,11 @@ namespace Lampadas.Controllers
             foreach (var item in Data.Lampadas)
             {
                 item.Value.Status = false;
-                hubContext.Clients.All.apagar(item.Key, 0);
+                hubContext.Clients.All.apagar(item.Key, 0, 0);
             }
 
             hubContext.Clients.All.reiniciar();
+            Data.UltimaInteracao = null;
         }
 
         [DataContract]
