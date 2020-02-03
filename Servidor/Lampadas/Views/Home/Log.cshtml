@@ -29,14 +29,20 @@
         hubTest.client.apagar = function (lampada, utlimaAlteracaoLampada, ultimaInteracao) {
             $("#log").prepend("<li>Apagou - Lampada: " + lampada + " -> Ultima interação lampada: " + utlimaAlteracaoLampada + " | Ultima interação: " + ultimaInteracao + "</li>");
         }
-        
+
         hubTest.client.reiniciar = function () {
             $("#log").prepend("<li class='teste'>Reiniciar!</li>");
         }
 
+
+        hubTest.client.verHistorico = function (exibir) {
+            $("#log").prepend("<li class='teste'>Exibir -> " + exibir ? "Sim" : "Não" + "</li>");
+        }
+
+
         hubTest.client.mudarTime = function (time) {
             $("#log").prepend("<li>O time mudou! - Novo -> " + time.Nome + "</li>");
-        }      
+        }
 
         $.connection.hub.stateChanged(function (s, e, c) {
             if (s.newState != 0)

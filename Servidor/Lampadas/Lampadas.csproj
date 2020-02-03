@@ -221,6 +221,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\HistoricoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MainHub.cs" />
     <Compile Include="Controllers\LampadasController.cs" />
@@ -1462,7 +1463,7 @@
     <Content Include="Content\glide-master\tests\unit\unit.test.js" />
     <Content Include="Content\img\banco.svg" />
     <Content Include="Content\img\cat.gif" />
-    <Content Include="Content\img\chao.png" />
+    <Content Include="Content\img\desk.svg" />
     <Content Include="Content\img\lamp-off.png" />
     <Content Include="Content\img\lamp-on.png" />
     <Content Include="Content\img\mesa.svg" />
@@ -1589,6 +1590,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Scripts\app\" />
+    <Folder Include="Views\Historico\" />
     <Folder Include="Views\Time\" />
   </ItemGroup>
   <ItemGroup>

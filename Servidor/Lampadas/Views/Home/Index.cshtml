@@ -27,7 +27,8 @@
             $nomeEquipe.text(time.Nome);
         }
 
-        hubTest.client.verHistorico = function () {
+        hubTest.client.verHistorico = function (exibir) {
+            console.log("Chamou -> ", exibir)
         }
 
         $.connection.hub.stateChanged(function (s, e, c) {
