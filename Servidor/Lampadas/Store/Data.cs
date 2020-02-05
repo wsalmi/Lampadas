@@ -33,7 +33,7 @@ namespace Lampadas
 
         private static IEnumerable<KeyValuePair<byte, EquipeData>> SeedEquipes()
         {
-            yield return new EquipeData { CodEquipe = 0, Nome = "Squad 37 ☠" };
+            yield return new EquipeData { CodEquipe = 0, Nome = "squad37" };
         }
         private static IEnumerable<KeyValuePair<byte, LampadaData>> SeedLampadas()
         {
