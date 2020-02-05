@@ -5,14 +5,13 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Python: Arquivo Atual",
+            "name": "Python",
             "type": "python",
             "request": "launch",
-            "program": "${file}",
+            "program": "${workspaceFolder}\\main.py",
             "console": "integratedTerminal",
             "env": {
-                "ID_EQUIPE": 1,
-                "LAMPADA_URL_API": "htttps://localhost:8080/api"
+                "ID_EQUIPE": "1"
             }
         }
     ]

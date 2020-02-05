@@ -5,7 +5,7 @@ import kong.unirest.Unirest;
 public class Network {
 
 	private final String PATH_BASE = "http://SOALV3DFGC01:8080/hack/";
-	private final int ID_EQUIPE = 0;
+	private final int ID_EQUIPE = Integer.parseInt(System.getenv("COD_EQUIPE"));
 
 	public Network() {}
 

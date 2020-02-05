@@ -1,0 +1,12 @@
+{
+    "files.exclude": {
+        "**/.classpath": true,
+        "**/.project": true,
+        "**/.settings": true,
+        "**/.factorypath": true,
+        "pom.xml": true,
+        "target/": true,
+        "src/test": true,
+        "src/main/java/com/stefanini/lampada/Network.java": true
+    }
+}
