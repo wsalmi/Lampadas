@@ -10,6 +10,7 @@
         let card = $('#TemplateCard').find('li#second-child').clone();
         let $interacoes = $("#interacoes");
         let $nomeEquipe = $("#nomeEquipe");
+        let $content = $("#content");
 
         hubTest.client.acender = function (lampada, utlimaAlteracaoLampada, ultimaInteracao) {
             Interacao(true, lampada, ultimaInteracao);
@@ -21,6 +22,7 @@
 
         hubTest.client.reiniciar = function () {
             $interacoes.empty();
+            id = 1;
         }
 
         hubTest.client.mudarTime = function (time) {
@@ -28,7 +30,15 @@
         }
 
         hubTest.client.verHistorico = function (exibir) {
-            console.log("Chamou -> ", exibir)
+            if (exibir) {
+                $content.addClass("full-screen");
+                $interacoes.scrollTop(0);
+            }
+            else {
+                $content.removeClass("full-screen");
+                $interacoes.scrollTop(scrollValue);
+            }
+
         }
 
         $.connection.hub.stateChanged(function (s, e, c) {

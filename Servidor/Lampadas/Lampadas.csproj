@@ -1464,9 +1464,11 @@
     <Content Include="Content\img\banco.svg" />
     <Content Include="Content\img\cat.gif" />
     <Content Include="Content\img\desk.svg" />
+    <Content Include="Content\img\hack.svg" />
     <Content Include="Content\img\lamp-off.png" />
     <Content Include="Content\img\lamp-on.png" />
     <Content Include="Content\img\mesa.svg" />
+    <Content Include="Content\img\skull.svg" />
     <Content Include="Content\img\tv.svg" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\style.css" />
