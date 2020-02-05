@@ -26,7 +26,12 @@
         }
 
         hubTest.client.mudarTime = function (time) {
-            $nomeEquipe.text(time.Nome);
+            if (time.Nome == 'squad37') {
+                $nomeEquipe.empty()
+                $nomeEquipe.append("Squad 37  <i class='fa fa-skull'></i>")
+            }
+            else
+                $nomeEquipe.text(time.Nome);
         }
 
         hubTest.client.verHistorico = function (exibir) {
@@ -63,7 +68,7 @@
 
             let novaInteracao = $("<div id='interacao" + id + "' class='card-interacao'></div>")
                 .append("<div class='numero'>" + id + "</div>")
-                .append("<div class='id-lampada'><span class='lampada-n'>"+ lampada +"</span></div>")
+                .append("<div class='id-lampada'><span class='lampada-n'>" + lampada + "</span></div>")
                 .append("<div class='estado-anterior " + (estadoAnterior ? "lampada-on" : "lampada-off") + "'></div>")
                 .append("<div class='seta fa fa-arrow-right'></div>")
                 .append("<div class='estado-atual " + (estado ? "lampada-on" : "lampada-off") + "'></div>")
@@ -76,7 +81,6 @@
 
             scrollValue += $("#interacao" + id).offset().top * 2;
 
-            console.log(scrollValue)
             id++;
         }
 
@@ -101,8 +105,8 @@
                         return;
                     }
                 }
-
-                $nomeEquipe.text(data[0].nome);
+                $nomeEquipe.empty()
+                $nomeEquipe.append("Squad 37  <i class='fa fa-skull'></i>")
             });
         }
 
