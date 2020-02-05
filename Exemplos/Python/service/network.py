@@ -1,12 +1,12 @@
-import requests
+import requests, os
 import json
-class Lampada:
+class Network:
     @staticmethod
     def _api(lampadaId, status):
         url = "http://soalv3dfgc01:8080/hack/api/lampada/%i/status" % lampadaId
         payload = {
             "status": status,
-            "idEquipe": 1
+            "idEquipe": os.environ["ID_EQUIPE"]
         }
         headers = {
         'Content-Type': 'application/json'
@@ -15,11 +15,5 @@ class Lampada:
         print(response.text.encode('utf8'))
 
     @staticmethod
-    def acender(lampadaId):
-        Lampada._api(lampadaId, True)
-
-    @staticmethod
-    def apagar(lampadaId):
-        Lampada._api(lampadaId, False)
-
-
+    def atualizaStatus(lampadaId, status):
+        Network._api(lampadaId, status)

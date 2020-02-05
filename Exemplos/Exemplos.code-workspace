@@ -1,0 +1,21 @@
+{
+	"folders": [
+		{
+			"path": ".NET"
+		},
+		{
+			"path": "Java"
+		},
+		{
+			"path": "Nodejs"
+		},
+		{
+			"path": "Python"
+		}
+	],
+	"settings": {
+		"files.exclude": {
+			".gitignore": true
+		}
+	}
+}

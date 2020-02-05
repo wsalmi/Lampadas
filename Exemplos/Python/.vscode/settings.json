@@ -1,0 +1,6 @@
+{
+    "files.exclude": {
+        "service": true,
+        "**/__pycache__": true
+    }
+}

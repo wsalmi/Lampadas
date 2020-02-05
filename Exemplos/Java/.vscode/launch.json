@@ -6,16 +6,13 @@
     "configurations": [
         {
             "type": "java",
-            "name": "Debug (Launch) - Current File",
-            "request": "launch",
-            "mainClass": "${file}"
-        },
-        {
-            "type": "java",
-            "name": "Debug (Launch)-App<lampada>",
+            "name": "Java",
             "request": "launch",
             "mainClass": "com.stefanini.lampada.App",
-            "projectName": "lampada"
+            "projectName": "lampada",
+            "env": {
+                "COD_EQUIPE": "1"
+            }
         }
     ]
 }

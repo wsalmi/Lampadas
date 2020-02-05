@@ -8,8 +8,7 @@ public class Network
 
     public Network()
     {
-        codEquipe = 0;
-        // httpClient = new RestSharp.RestClient("http://localhost:17060");
+        codEquipe = int.Parse(System.Environment.GetEnvironmentVariable("COD_EQUIPE"));
         httpClient = new RestSharp.RestClient("http://SOALV3DFGC01:8080/hack");
     }
 

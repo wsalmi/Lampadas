@@ -1,15 +1,51 @@
-from service.lampada import Lampada
+from service.network import Network
+import requests
 import time
 
 def lampadaStatus(idLampada, status):
-    if status:
-        Lampada.acender(idLampada)
-    else:
-        Lampada.apagar(idLampada)
+        Network.atualizaStatus(idLampada, status)
 
 def main():
-    for i in range(1,11):
-        if i % 2 == 0:
-            time.sleep(1)
-            lampadaStatus(i, True)
+    while True:
+        time.sleep(1)
+        lampadaStatus(1, True)
+        time.sleep(1)
+        lampadaStatus(1, False)
+        time.sleep(2)
+        lampadaStatus(1, True)
+        time.sleep(2)
+        lampadaStatus(1, False)
+        time.sleep(3)
+        lampadaStatus(1, True)
+        time.sleep(3)
+        lampadaStatus(1, False)
+        time.sleep(4)
+        lampadaStatus(1, True)
+        time.sleep(4)
+        lampadaStatus(1, False)
+        time.sleep(5)
+        lampadaStatus(1, True)
+        time.sleep(5)
+        lampadaStatus(1, False)
+        time.sleep(6)
+        lampadaStatus(1, True)
+        time.sleep(6)
+        lampadaStatus(1, False)
+        time.sleep(7)
+        lampadaStatus(1, True)
+        time.sleep(7)
+        lampadaStatus(1, False)
+        time.sleep(8)
+        lampadaStatus(1, True)
+        time.sleep(8)
+        lampadaStatus(1, False)
+        time.sleep(9)
+        lampadaStatus(1, True)
+        time.sleep(9)
+        lampadaStatus(1, False)
+        time.sleep(10)
+        lampadaStatus(1, True)
+        time.sleep(10)
+        lampadaStatus(1, False)
+        pass
 main()
