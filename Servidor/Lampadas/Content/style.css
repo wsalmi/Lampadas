@@ -364,7 +364,11 @@ html, body {
             text-align: center;
         }
 
-            .cenario .tv-screen p i {
+        .cenario .tv-screen marquee {
+            font-size: 25px;
+        }
+
+            .cenario .tv-screen marquee i {
                 font-size: 30px;
             }
 
