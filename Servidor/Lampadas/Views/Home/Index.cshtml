@@ -41,7 +41,9 @@
             }
             else {
                 $content.removeClass("full-screen");
-                $interacoes.scrollTop(scrollValue);
+                setTimeout(() => {
+                    $interacoes.scrollTop(scrollValue);
+                },1000)
             }
 
         }
