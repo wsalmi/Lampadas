@@ -13,6 +13,9 @@
             "skipFiles": [
                 "<node_internals>/**"
             ],
+            "env": {
+                "COD_EQUIPE": "0"
+            },
             "program": "${workspaceFolder}\\src\\index.ts",
             
         }
