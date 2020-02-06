@@ -40,6 +40,7 @@ namespace Lampadas.Controllers
             if (equipe.Autorizada && !Data.Equipes[equipe.CodEquipe].Autorizada)
             {
                 LampadasController.ApagarTodas();
+                Data.Equipes[Data.EquipeAutorizada].Autorizada = false;
                 Data.EquipeAutorizada = equipe.CodEquipe;
             }
             else if (!equipe.Autorizada)

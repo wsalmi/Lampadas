@@ -6,7 +6,7 @@ using Lampadas.Controllers;
 
 namespace Lampadas.Store
 {
-    public struct EquipeData
+    public class EquipeData
     {
         public byte CodEquipe { get; set; }
         public string Nome { get; set; }
