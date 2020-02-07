@@ -1,0 +1,11 @@
+{
+    "files.exclude": {
+        "out": true,
+        "src\\enviroment.ts": true,
+        "src\\services": true,
+        "node_modules": true,
+        "nodemon.json": true,
+        "package*.json": true,
+        "tsconfig.json": true
+    }
+}
