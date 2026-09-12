@@ -25,6 +25,18 @@ npm start
 
 Abra `http://localhost:3000`. O painel inicia com 10 lâmpadas apagadas e a equipe padrão `squad37`, código `0`.
 
+## Interface
+
+A interface foi desenhada para apresentação em tela grande, mas também se adapta a dispositivos móveis. As capturas abaixo foram feitas executando o painel localmente com uma rodada demonstrativa, equipe autorizada e lâmpadas em estados diferentes.
+
+### Visão desktop
+
+![Painel de lâmpadas em viewport desktop, com equipe autorizada, métricas, lâmpadas acesas e histórico](docs/screenshots/dashboard-desktop.png)
+
+### Visão mobile
+
+![Painel de lâmpadas em viewport mobile, com grade responsiva e histórico abaixo dos cartões](docs/screenshots/dashboard-mobile.png)
+
 Para simular uma equipe:
 
 ```bash
