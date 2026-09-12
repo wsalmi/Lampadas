@@ -25,6 +25,10 @@ npm start
 
 Abra `http://localhost:3000`. O painel inicia com 10 lâmpadas apagadas e a equipe padrão `squad37`, código `0`.
 
+## Guia para participantes
+
+Participantes devem consultar o [Guia rápido dos participantes](docs/GUIA-PARTICIPANTES.md), que explica a configuração, o endpoint de atualização, exemplos em JavaScript e Python, códigos de erro e o checklist antes da apresentação.
+
 ## Interface
 
 A interface foi desenhada para apresentação em tela grande, mas também se adapta a dispositivos móveis. As capturas abaixo foram feitas executando o painel localmente com uma rodada demonstrativa, equipe autorizada e lâmpadas em estados diferentes.
