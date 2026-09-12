@@ -1,0 +1,16 @@
+{
+  "name": "lampadas-dashboard",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Painel em tempo real e API para apresentações de desafios de lâmpadas em hackathons.",
+  "type": "commonjs",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "node --watch src/index.js",
+    "start": "node src/index.js",
+    "check": "node --check src/store.js && node --check src/index.js && node --check src/public/app.js",
+    "test": "node --test"
+  }
+}

@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#08111f" />
+    <title>Painel de Lâmpadas</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">HACKATHON · PAINEL DE APRESENTAÇÃO</p>
+          <h1>Lâmpadas em tempo real</h1>
+        </div>
+        <div class="connection-status" aria-live="polite">
+          <span class="status-dot" id="connection-dot"></span>
+          <span id="connection-label">Conectando</span>
+        </div>
+      </header>
+
+      <section class="hero-card" aria-labelledby="team-title">
+        <div>
+          <p class="eyebrow">EQUIPE AUTORIZADA</p>
+          <h2 id="team-title">squad37</h2>
+          <p class="muted" id="team-subtitle">Aguardando a primeira interação</p>
+        </div>
+        <div class="hero-metrics" aria-label="Resumo do painel">
+          <div class="metric"><strong id="on-count">0</strong><span>acesas</span></div>
+          <div class="metric"><strong id="event-count">0</strong><span>interações</span></div>
+        </div>
+      </section>
+
+      <section class="dashboard-grid" aria-label="Estado das lâmpadas">
+        <div class="lamp-grid" id="lamp-grid"></div>
+        <aside class="history-panel" id="history-panel">
+          <div class="panel-heading"><h2>Histórico</h2><span id="history-count">0</span></div>
+          <div class="history-list" id="history-list" aria-live="polite" aria-label="Histórico de interações"></div>
+        </aside>
+      </section>
+    </main>
+    <template id="lamp-template">
+      <article class="lamp-card" data-lamp-card>
+        <div class="lamp-visual" data-lamp-visual aria-hidden="true"><span></span></div>
+        <div class="lamp-info"><span class="lamp-label">Lâmpada</span><strong data-lamp-id>--</strong></div>
+        <span class="lamp-state" data-lamp-state>Apagada</span>
+      </article>
+    </template>
+    <script src="/app.js" defer></script>
+  </body>
+</html>
