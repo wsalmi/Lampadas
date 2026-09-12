@@ -1,50 +1,32 @@
-using RestSharp;
-using System.Runtime.Serialization;
+using System.Net.Http.Json;
 
-public class Network
+namespace LampadasExample;
+
+public sealed class LampadasClient : IDisposable
 {
-    private readonly int codEquipe;
-    private readonly RestClient httpClient;
+    private readonly HttpClient http;
+    private readonly int teamCode;
 
-    public Network()
+    public LampadasClient()
     {
-        codEquipe = int.Parse(System.Environment.GetEnvironmentVariable("COD_EQUIPE"));
-        httpClient = new RestSharp.RestClient("http://SOALV3DFGC01:8080/hack");
+        var apiUrl = Environment.GetEnvironmentVariable("LAMPADAS_API_URL") ?? "http://localhost:3000/api";
+        if (!Uri.TryCreate(apiUrl.TrimEnd('/'), UriKind.Absolute, out var baseUri))
+            throw new InvalidOperationException("LAMPADAS_API_URL inválida.");
+
+        if (!int.TryParse(Environment.GetEnvironmentVariable("COD_EQUIPE") ?? "0", out teamCode))
+            throw new InvalidOperationException("COD_EQUIPE deve ser um número.");
+
+        http = new HttpClient { BaseAddress = new Uri($"{baseUri}/") };
+        http.Timeout = TimeSpan.FromSeconds(5);
     }
 
-    public LampadaPutResponseBody AtualizaStatus(byte codLampada, bool status)
+    public async Task<string> UpdateLampAsync(int lampId, bool status, CancellationToken cancellationToken = default)
     {
-        return httpClient.Put(new JsonRequest<LampadaPutRequestBody, LampadaPutResponseBody>(
-            resource: $"/api/lampada/{codLampada}/status", 
-            request: new LampadaPutRequestBody
-            {
-                IdEquipe = codEquipe,
-                Status = status, 
-            })).Data;
+        var response = await http.PutAsJsonAsync($"lampada/{lampId}/status", new { idEquipe = teamCode, status }, cancellationToken);
+        var body = await response.Content.ReadAsStringAsync(cancellationToken);
+        response.EnsureSuccessStatusCode();
+        return body;
     }
 
-    [DataContract]
-    public struct LampadaPutRequestBody
-    {
-        [DataMember(Name = "status")]
-        public bool Status { get; internal set; }
-
-        [DataMember(Name = "idEquipe")]
-        public int IdEquipe { get; internal set; }
-    }
-
-    [DataContract]
-    public struct LampadaPutResponseBody
-    {
-        [DataMember(Name = "lampada")]
-        public byte Lampada { get; set; }
-
-        [DataMember(Name = "status")]
-        public string Status { get; set; }
-
-        public override string ToString()
-        {
-            return $"Lampada {Lampada} -> {Status}";
-        }
-    }
+    public void Dispose() => http.Dispose();
 }

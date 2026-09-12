@@ -1,6 +1,31 @@
-bin
-obj
-.vs
-.user
-/Exemplos/Java/.settings
-/Exemplos/Java/target
+# Node.js
+node_modules/
+coverage/
+.env
+.env.*
+!.env.example
+out/
+dist/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+
+# .NET / IDE
+bin/
+obj/
+.vs/
+.idea/
+*.user
+*.suo
+
+# Java / Maven
+target/
+.classpath
+.project
+.settings/
+
+# OS
+.DS_Store
+Thumbs.db

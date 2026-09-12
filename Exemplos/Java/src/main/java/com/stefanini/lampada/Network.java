@@ -1,40 +1,35 @@
 package com.stefanini.lampada;
 
-import kong.unirest.Unirest;
+import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.time.Duration;
 
-public class Network {
+public final class Network {
+    private final HttpClient http;
+    private final String apiUrl;
+    private final int teamCode;
 
-	private final String PATH_BASE = "http://SOALV3DFGC01:8080/hack/";
-	private final int ID_EQUIPE = Integer.parseInt(System.getenv("COD_EQUIPE"));
+    public Network() {
+        this.apiUrl = System.getenv().getOrDefault("LAMPADAS_API_URL", "http://localhost:3000/api").replaceAll("/+$", "");
+        this.teamCode = Integer.parseInt(System.getenv().getOrDefault("COD_EQUIPE", "0"));
+        this.http = HttpClient.newBuilder().connectTimeout(Duration.ofSeconds(5)).build();
+    }
 
-	public Network() {}
-
-	public LampadaPutResponseBody setLampadaStatus(Integer codLampada, boolean status) {
-		String url = String.format("%s%s", PATH_BASE, "api/lampada/{codLampada}/status");
-		return Unirest.put(url)
-				.header("Content-Type", "application/json")
-				.routeParam("codLampada", codLampada.toString())
-				.body(new LampadaPutRequestBody(ID_EQUIPE, status))
-				.asObject(LampadaPutResponseBody.class).getBody();
-	}
-
-	public class LampadaPutRequestBody {
-		public int idEquipe;
-		public boolean status;
-
-		public LampadaPutRequestBody(int idEquipe, boolean status) {
-			this.idEquipe = idEquipe;
-			this.status = status;
-		}
-	}
-
-	public class LampadaPutResponseBody {
-		public int lampada;
-		public String status;
-
-		@Override
-		public String toString() {
-			return "Lampada " + lampada + " -> " + status;
-		}
-	}
+    public String setLampadaStatus(int lampId, boolean status) throws IOException, InterruptedException {
+        var body = String.format("{\"idEquipe\":%d,\"status\":%s}", teamCode, status);
+        var request = HttpRequest.newBuilder()
+                .uri(URI.create(apiUrl + "/lampada/" + lampId + "/status"))
+                .timeout(Duration.ofSeconds(5))
+                .header("Content-Type", "application/json")
+                .PUT(HttpRequest.BodyPublishers.ofString(body))
+                .build();
+        var response = http.send(request, HttpResponse.BodyHandlers.ofString());
+        if (response.statusCode() < 200 || response.statusCode() >= 300) {
+            throw new IOException("API retornou HTTP " + response.statusCode() + ": " + response.body());
+        }
+        return response.body();
+    }
 }

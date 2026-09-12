@@ -1,59 +1,24 @@
-﻿using System.Threading;
-using System;
+namespace LampadasExample;
 
-namespace _NET
+public static class Program
 {
-    class Program
+    public static async Task Main(string[] args)
     {
-        private static readonly Network lampadas = new Network();
-        private static void lampadaStatus(byte lampada, bool status) => Console.WriteLine(lampadas.AtualizaStatus(lampada, status));
+        var repeat = args.Contains("--repeat", StringComparer.OrdinalIgnoreCase);
+        var delay = int.TryParse(Environment.GetEnvironmentVariable("DELAY_MS"), out var configuredDelay)
+            ? Math.Max(0, configuredDelay)
+            : 500;
 
-        static void Main(string[] args)
+        using var client = new LampadasClient();
+        do
         {
-            var delay = 500;
-            while (true)
+            foreach (var lampId in Enumerable.Range(1, 10))
             {
-                lampadaStatus(1, false);
-                Thread.Sleep(delay);
-                lampadaStatus(1, true);
-                Thread.Sleep(delay);
-                lampadaStatus(2, false);
-                Thread.Sleep(delay);
-                lampadaStatus(2, true);
-                Thread.Sleep(delay);
-                lampadaStatus(3, false);
-                Thread.Sleep(delay);
-                lampadaStatus(3, true);
-                Thread.Sleep(delay);
-                lampadaStatus(4, false);
-                Thread.Sleep(delay);
-                lampadaStatus(4, true);
-                Thread.Sleep(delay);
-                lampadaStatus(5, false);
-                Thread.Sleep(delay);
-                lampadaStatus(5, true);
-                Thread.Sleep(delay);
-                lampadaStatus(6, false);
-                Thread.Sleep(delay);
-                lampadaStatus(6, true);
-                Thread.Sleep(delay);
-                lampadaStatus(7, false);
-                Thread.Sleep(delay);
-                lampadaStatus(7, true);
-                Thread.Sleep(delay);
-                lampadaStatus(8, false);
-                Thread.Sleep(delay);
-                lampadaStatus(8, true);
-                Thread.Sleep(delay);
-                lampadaStatus(9, false);
-                Thread.Sleep(delay);
-                lampadaStatus(9, true);
-                Thread.Sleep(delay);
-                lampadaStatus(10, false);
-                Thread.Sleep(delay);
-                lampadaStatus(10, true);
-                Thread.Sleep(delay);
+                Console.WriteLine(await client.UpdateLampAsync(lampId, false));
+                await Task.Delay(delay);
+                Console.WriteLine(await client.UpdateLampAsync(lampId, true));
+                await Task.Delay(delay);
             }
-        }
+        } while (repeat);
     }
 }
