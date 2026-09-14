@@ -57,6 +57,12 @@ curl -X PUT http://localhost:3000/api/lampada/1/status \
   -d '{"idEquipe":7,"status":true}'
 ```
 
+## Comparativo Antes e Depois
+
+A imagem abaixo representa a UI anterior, recuperada do [commit legado `f96160e`](https://github.com/wsalmi/Lampadas/commit/f96160e). Ela permite comparar diretamente a composição antiga — lâmpadas em linha, cards de interação e cenário pixel-art — com a interface atual mostrada na seção acima.
+
+![Antes — interface legada do painel de lâmpadas](docs/screenshots/dashboard-before.png)
+
 ## Estrutura
 
 ```text
